@@ -93,6 +93,7 @@
       text-align: center;
       line-height: 1.1;
       color: #111;
+      overflow: hidden;
     }
 
     .brand-copy h1 {
@@ -231,34 +232,8 @@
       width: 100%;
       aspect-ratio: 4 / 3;
       border-radius: 26px;
-      background:
-        linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.18)),
-        linear-gradient(135deg, #82cbe6 0%, #4d8aa0 32%, #355f6e 55%, #6d5b3e 100%);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-image::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 18% 16%, rgba(255,255,255,0.48), transparent 18%),
-        linear-gradient(180deg, rgba(255,255,255,0.08), transparent 35%);
-    }
-
-    .hero-image::after {
-      content: "Cape Town mountain landscape";
-      position: absolute;
-      right: 18px;
-      bottom: 18px;
-      color: rgba(255,255,255,0.92);
-      font-size: 0.9rem;
-      letter-spacing: 0.04em;
-      background: rgba(0,0,0,0.28);
-      padding: 8px 12px;
-      border-radius: 999px;
-      backdrop-filter: blur(8px);
+      object-fit: cover;
+      display: block;
     }
 
     .hero-badge {
@@ -532,7 +507,7 @@
     <div class="container header-inner">
       <a class="brand" href="#top">
         <div class="brand-badge">
-          <div class="brand-mark">OUTDOOR<br/>ADDICTS</div>
+          <img src="https://res.cloudinary.com/dul5jzcpv/image/upload/v1776021816/IMG_0594_ehi1do.jpg" alt="Outdoor Addicts logo" style="width:100%; height:100%; object-fit:contain; border-radius:16px;" />
         </div>
         <div class="brand-copy">
           <h1>Outdoor Addicts</h1>
@@ -572,7 +547,7 @@
 
         <div class="hero-visual-wrap">
           <div class="hero-visual">
-            <div class="hero-image"></div>
+            <img src="https://res.cloudinary.com/dul5jzcpv/image/upload/v1776022049/DSC02462-Enhanced-NR_tv0sik.jpg" alt="Cape Town hiking experience" class="hero-image" />
           </div>
           <div class="hero-badge">
             <small>Based in</small>
