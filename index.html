@@ -1,93 +1,802 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Outdoor Addicts</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Outdoor Addicts | Live Your Wild</title>
+  <meta
+    name="description"
+    content="Premium guided hiking and outdoor experiences in Cape Town. Book Lion's Head, Table Mountain, and private adventures with Outdoor Addicts."
+  />
   <style>
+    :root {
+      --bg: #f7f7f4;
+      --surface: rgba(255, 255, 255, 0.86);
+      --surface-strong: #ffffff;
+      --text: #111111;
+      --muted: #5e5e5e;
+      --border: rgba(0, 0, 0, 0.08);
+      --accent: #d99a16;
+      --accent-soft: #fff3d6;
+      --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.12);
+      --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --max-width: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #fafaf9;
-      color: #111;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(217, 154, 22, 0.13), transparent 30%),
+        linear-gradient(to bottom, #ffffff, var(--bg));
     }
-    header {
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(255, 255, 255, 0.84);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.04);
+    }
+
+    .header-inner {
       display: flex;
       align-items: center;
-      padding: 20px;
-      background: white;
-      border-bottom: 1px solid #eee;
+      justify-content: space-between;
+      padding: 16px 0;
+      gap: 20px;
     }
-    header img {
-      height: 60px;
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
     }
-    .hero {
-      padding: 60px 20px;
+
+    .brand-badge {
+      width: 68px;
+      height: 68px;
+      border-radius: 22px;
+      background: var(--surface-strong);
+      border: 1px solid rgba(255,255,255,0.65);
+      box-shadow: var(--shadow-md);
+      padding: 6px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .brand-mark {
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #fff 0%, #f7f7f7 100%);
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      font-weight: 800;
       text-align: center;
+      line-height: 1.1;
+      color: #111;
     }
-    .hero h1 {
-      font-size: 40px;
+
+    .brand-copy h1 {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1;
     }
+
+    .brand-copy p {
+      margin: 6px 0 0;
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #666;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      font-size: 0.95rem;
+      color: #444;
+    }
+
+    .nav a:hover { color: #000; }
+
+    .hero {
+      padding: 80px 0 72px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 52px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+    }
+
+    .hero h2 {
+      margin: 0;
+      font-size: clamp(2.5rem, 5vw, 4.8rem);
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+    }
+
     .hero p {
-      max-width: 600px;
-      margin: auto;
+      margin: 24px 0 0;
+      max-width: 650px;
+      font-size: 1.08rem;
+      line-height: 1.85;
+      color: var(--muted);
     }
-    .section {
-      padding: 40px 20px;
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
     }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      padding: 0 24px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      font-weight: 700;
+      transition: 0.22s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #111;
+      color: #fff;
+      border-color: #111;
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      background: #1f1f1f;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.7);
+      color: #111;
+    }
+
+    .btn-secondary:hover {
+      background: #fff;
+      transform: translateY(-1px);
+    }
+
+    .hero-points {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 36px;
+    }
+
+    .mini-card {
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: var(--shadow-md);
+      padding: 16px;
+      border-radius: 18px;
+      font-size: 0.92rem;
+      color: #333;
+    }
+
+    .hero-visual-wrap {
+      position: relative;
+    }
+
+    .hero-visual {
+      border-radius: 34px;
+      background: var(--surface-strong);
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: var(--shadow-lg);
+      padding: 12px;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 26px;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.18)),
+        linear-gradient(135deg, #82cbe6 0%, #4d8aa0 32%, #355f6e 55%, #6d5b3e 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-image::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 16%, rgba(255,255,255,0.48), transparent 18%),
+        linear-gradient(180deg, rgba(255,255,255,0.08), transparent 35%);
+    }
+
+    .hero-image::after {
+      content: "Cape Town mountain landscape";
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      color: rgba(255,255,255,0.92);
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      background: rgba(0,0,0,0.28);
+      padding: 8px 12px;
+      border-radius: 999px;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-badge {
+      position: absolute;
+      left: -10px;
+      bottom: -14px;
+      background: rgba(255,255,255,0.95);
+      border: 1px solid rgba(255,255,255,0.7);
+      border-radius: 20px;
+      padding: 16px 18px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .hero-badge small {
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 0.68rem;
+      color: #777;
+      margin-bottom: 6px;
+    }
+
+    section {
+      padding: 80px 0;
+    }
+
+    .section-head {
+      max-width: 780px;
+      margin-bottom: 34px;
+    }
+
+    .section-head h3 {
+      margin: 10px 0 0;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.03em;
+    }
+
+    .section-head p {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 1.03rem;
+      line-height: 1.8;
+    }
+
+    .cards-3,
+    .cards-2 {
+      display: grid;
+      gap: 20px;
+    }
+
+    .cards-3 { grid-template-columns: repeat(3, 1fr); }
+    .cards-2 { grid-template-columns: repeat(2, 1fr); }
+
     .card {
-      background: white;
-      padding: 20px;
-      margin: 10px 0;
-      border-radius: 12px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(255,255,255,0.7);
+      border-radius: 26px;
+      box-shadow: var(--shadow-md);
+      padding: 28px;
     }
-    .whatsapp {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: black;
-      color: white;
-      padding: 12px 20px;
+
+    .card-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 1.4rem;
+      margin-bottom: 18px;
+    }
+
+    .card h4 {
+      margin: 0;
+      font-size: 1.3rem;
+    }
+
+    .card p {
+      margin: 14px 0 0;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.98rem;
+    }
+
+    .band {
+      background: linear-gradient(to bottom, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 26px;
+      align-items: start;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .contact-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 18px 20px;
+      background: rgba(255,255,255,0.92);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: var(--shadow-md);
+    }
+
+    .contact-item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 1rem;
+    }
+
+    .contact-item span,
+    .contact-item a {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .form-card {
+      background: rgba(255,255,255,0.95);
       border-radius: 30px;
-      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.72);
+      box-shadow: var(--shadow-lg);
+      padding: 30px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 16px;
+      background: #fff;
+      padding: 14px 16px;
+      font: inherit;
+      color: #111;
+      outline: none;
+      transition: 0.2s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: rgba(217, 154, 22, 0.6);
+      box-shadow: 0 0 0 4px rgba(217, 154, 22, 0.14);
+    }
+
+    textarea {
+      min-height: 160px;
+      resize: vertical;
+    }
+
+    .full { grid-column: 1 / -1; }
+
+    .form-note {
+      margin: 14px 0 0;
+      font-size: 0.82rem;
+      color: #777;
+      line-height: 1.7;
+    }
+
+    .success-message {
+      margin-top: 14px;
+      font-size: 0.94rem;
+      color: #2c6b37;
+      display: none;
+    }
+
+    .site-footer {
+      border-top: 1px solid rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(12px);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 26px 0;
+      color: #666;
+      font-size: 0.95rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 70;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 56px;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: #111;
+      color: white;
+      box-shadow: var(--shadow-lg);
+      font-weight: 700;
+      transition: 0.22s ease;
+    }
+
+    .whatsapp-float:hover {
+      transform: translateY(-2px);
+      background: #1d1d1d;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-grid,
+      .contact-grid,
+      .cards-3,
+      .cards-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-points,
+      .form-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav { display: none; }
+      .hero { padding-top: 48px; }
+      section { padding: 64px 0; }
+      .hero-points,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-badge {
+        position: static;
+        margin-top: 14px;
+        display: inline-block;
+      }
+      .form-card,
+      .card,
+      .mini-card { padding: 22px; }
+      .whatsapp-float span:last-child { display: none; }
     }
   </style>
 </head>
-
 <body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top">
+        <div class="brand-badge">
+          <div class="brand-mark">OUTDOOR<br/>ADDICTS</div>
+        </div>
+        <div class="brand-copy">
+          <h1>Outdoor Addicts</h1>
+          <p>Live Your Wild</p>
+        </div>
+      </a>
 
-<header>
-  <img src="https://via.placeholder.com/150x60?text=Outdoor+Addicts" alt="Logo">
-</header>
+      <nav class="nav">
+        <a href="#about">About</a>
+        <a href="#experiences">Experiences</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
 
-<section class="hero">
-  <h1>Live Your Wild</h1>
-  <p>Premium guided hiking experiences in Cape Town</p>
-</section>
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Premium Cape Town guided adventures</span>
+          <h2>Explore the outdoors with Outdoor Addicts</h2>
+          <p>
+            Premium guided hiking and outdoor experiences for travellers, locals, and private groups who want to experience Cape Town’s iconic mountains with confidence and style.
+          </p>
 
-<section class="section">
-  <h2>Popular Experiences</h2>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contact">Request a Booking</a>
+            <a class="btn btn-secondary" href="#experiences">Popular Experiences</a>
+          </div>
 
-  <div class="card">
-    <h3>Lion’s Head Summit</h3>
-    <p>Best experienced at sunrise or sunset with unforgettable views.</p>
-  </div>
+          <div class="hero-points">
+            <div class="mini-card">Professional guided experiences</div>
+            <div class="mini-card">Private and group options</div>
+            <div class="mini-card">Sunrise and sunset magic</div>
+          </div>
+        </div>
 
-  <div class="card">
-    <h3>Table Mountain</h3>
-    <p>Explore Platteklip Gorge or India Venster with a professional guide.</p>
-  </div>
-</section>
+        <div class="hero-visual-wrap">
+          <div class="hero-visual">
+            <div class="hero-image"></div>
+          </div>
+          <div class="hero-badge">
+            <small>Based in</small>
+            <strong>Cape Town</strong>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<section class="section">
-  <h2>Contact</h2>
-  <p>Email: idreeshartley8@gmail.com</p>
-  <p>Phone: +27 76 900 7172</p>
-</section>
+    <section id="about">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">About Outdoor Addicts</span>
+          <h3>Live Your Wild</h3>
+          <p>
+            Outdoor Addicts offers guided outdoor experiences in Cape Town for people who want adventure, scenery, and a memorable local experience. Whether you are booking for yourself, a couple, or a group, the goal is simple: create a smooth, exciting, and unforgettable day outdoors.
+          </p>
+        </div>
 
-<a class="whatsapp" href="https://wa.me/27769007172" target="_blank">
-  Chat on WhatsApp
-</a>
+        <div class="cards-2">
+          <article class="card">
+            <div class="card-icon">⛰</div>
+            <h4>Local guidance</h4>
+            <p>
+              Experience Cape Town with someone who understands the routes, pace, and details that make a hike feel easy, enjoyable, and worthwhile.
+            </p>
+          </article>
 
+          <article class="card">
+            <div class="card-icon">☀</div>
+            <h4>Flexible adventures</h4>
+            <p>
+              Featuring sunrise and sunset hikes, iconic mountain routes, private adventures, and custom experiences built around your interests.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="experiences" class="band">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Popular experiences</span>
+          <h3>Popular experiences</h3>
+          <p>
+            A quick look at the kinds of guided adventures Outdoor Addicts can offer your guests.
+          </p>
+        </div>
+
+        <div class="cards-3">
+          <article class="card">
+            <div class="card-icon">🌅</div>
+            <h4>Lion’s Head Summit</h4>
+            <p>
+              A Cape Town favourite best experienced at sunrise or sunset, with rewarding summit views and an unforgettable guided hike.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">🏔</div>
+            <h4>Table Mountain Guided Hike</h4>
+            <p>
+              Explore one of the world’s most iconic mountains with guided route options and a tailored experience based on fitness and goals.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">🤝</div>
+            <h4>Private Group Adventures</h4>
+            <p>
+              Custom experiences for couples, families, friends, and small groups who want a more personal outdoor adventure.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container contact-grid">
+        <div>
+          <div class="section-head">
+            <span class="eyebrow">Contact</span>
+            <h3>Book an experience or send an enquiry</h3>
+            <p>
+              Use the form below to request a booking. Enquiries are sent straight to the Outdoor Addicts inbox.
+            </p>
+          </div>
+
+          <div class="contact-list">
+            <div class="contact-item">
+              <div>✉️</div>
+              <div>
+                <strong>Email</strong>
+                <a href="mailto:idreeshartley8@gmail.com">idreeshartley8@gmail.com</a>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div>📞</div>
+              <div>
+                <strong>Call or WhatsApp</strong>
+                <a href="https://wa.me/27769007172" target="_blank" rel="noreferrer">+27 76 900 7172</a>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div>📍</div>
+              <div>
+                <strong>Location</strong>
+                <span>Cape Town, South Africa</span>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div>👤</div>
+              <div>
+                <strong>Contact person</strong>
+                <span>Idrees Hartley</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <form id="enquiry-form" action="https://formspree.io/f/mzdkllal" method="POST">
+            <div class="form-grid">
+              <div>
+                <label for="name">Full name</label>
+                <input id="name" name="name" type="text" placeholder="Your name" required />
+              </div>
+
+              <div>
+                <label for="email">Email address</label>
+                <input id="email" name="email" type="email" placeholder="you@example.com" required />
+              </div>
+
+              <div>
+                <label for="phone">Phone or WhatsApp</label>
+                <input id="phone" name="phone" type="text" placeholder="Optional" />
+              </div>
+
+              <div>
+                <label for="experience">Preferred experience</label>
+                <select id="experience" name="experience" required>
+                  <option value="" disabled selected>Select an experience</option>
+                  <option value="Lion's Head Summit">Lion's Head Summit</option>
+                  <option value="Table Mountain Guided Hike">Table Mountain Guided Hike</option>
+                  <option value="Private Group Adventure">Private Group Adventure</option>
+                  <option value="Custom Outdoor Experience">Custom Outdoor Experience</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="preferred-date">Preferred date</label>
+                <input id="preferred-date" name="preferred_date" type="date" />
+              </div>
+
+              <div>
+                <label for="group-size">Group size</label>
+                <input id="group-size" name="group_size" type="text" placeholder="e.g. 2 people" />
+              </div>
+
+              <div class="full">
+                <label for="message">Request details</label>
+                <textarea id="message" name="message" placeholder="Tell us which experience you're interested in, your fitness level, preferred date, group size, and any special requests." required></textarea>
+              </div>
+            </div>
+
+            <input type="hidden" name="_subject" value="New Outdoor Addicts enquiry" />
+            <input type="hidden" name="_captcha" value="false" />
+
+            <div style="margin-top: 18px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+              <button class="btn btn-primary" type="submit">Send enquiry</button>
+            </div>
+
+            <p class="form-note">
+              Your enquiry is sent directly to Outdoor Addicts using the live Formspree inbox.
+            </p>
+            <p id="success-message" class="success-message">Thanks — your enquiry has been sent.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© <span id="year"></span> Outdoor Addicts. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="mailto:idreeshartley8@gmail.com">idreeshartley8@gmail.com</a>
+        <a href="https://wa.me/27769007172" target="_blank" rel="noreferrer">WhatsApp</a>
+        <span>+27 76 900 7172</span>
+      </div>
+    </div>
+  </footer>
+
+  <a class="whatsapp-float" href="https://wa.me/27769007172" target="_blank" rel="noreferrer">
+    <span>💬</span>
+    <span>Chat on WhatsApp</span>
+  </a>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const form = document.getElementById('enquiry-form');
+    const successMessage = document.getElementById('success-message');
+
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      const data = new FormData(form);
+
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { Accept: 'application/json' }
+      });
+
+      if (response.ok) {
+        form.reset();
+        successMessage.style.display = 'block';
+      } else {
+        alert('Something went wrong while sending your enquiry. Please try again.');
+      }
+    });
+  </script>
 </body>
 </html>
