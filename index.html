@@ -2,9 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Outdoor Addicts | Guided Hiking Tours in Cape Town</title>
@@ -482,6 +479,31 @@
       border-color: rgba(255,255,255,0.28);
       box-shadow: 0 0 0 4px rgba(255,255,255,0.08);
     }
+
+    .dark-input {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.08);
+      padding: 13px 14px;
+      color: #fff;
+      font: inherit;
+      outline: none;
+      color-scheme: dark;
+    }
+
+    .dark-input:focus {
+      border-color: rgba(255,255,255,0.28);
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.08);
+    }
+
+    .booking-note {
+      margin: 16px 0 0;
+      color: rgba(255,255,255,0.70);
+      line-height: 1.7;
+      font-size: 0.9rem;
+    }
+
 
     .price-output {
       margin-top: 18px;
@@ -1155,7 +1177,6 @@
         </div>
       </div>
     </section>
-
     <section id="pricing" class="pricing-wrap fade-in">
       <div class="container">
         <div class="section-head">
@@ -1171,7 +1192,7 @@
             <div class="pricing-label">Social Hikes · On-demand</div>
             <h4>Book your group hike</h4>
             <p class="pricing-subtext">
-              Guaranteed guided departures on Cape Town’s most popular routes without waiting for a scheduled group.
+              Guided departures on Cape Town’s most popular routes without waiting for a scheduled group. Final confirmation will be sent via WhatsApp or email.
             </p>
 
             <div class="pricing-block">
@@ -1186,51 +1207,106 @@
                     <option value="sunset">Sunset hike</option>
                   </select>
                 </div>
+
                 <div class="select-card">
                   <label for="lions-group-size">Select group size</label>
                   <select id="lions-group-size" class="dark-select">
                     <option value="1">1 person</option>
                     <option value="2">2 people</option>
-                    <option value="3-4">3 - 4 people</option>
-                    <option value="5-7">5 - 7 people</option>
-                    <option value="8+">8+ people</option>
+                    <option value="3">3 people</option>
+                    <option value="4">4 people</option>
+                    <option value="5">5 people</option>
+                    <option value="6">6 people</option>
+                    <option value="7">7 people</option>
+                    <option value="8">8 people</option>
+                  </select>
+                </div>
+
+                <div class="select-card">
+                  <label for="lions-date">Preferred date</label>
+                  <input id="lions-date" class="dark-input" type="date" />
+                </div>
+
+                <div class="select-card">
+                  <label for="lions-transport">Transport interest</label>
+                  <select id="lions-transport" class="dark-select">
+                    <option value="no">No transport needed</option>
+                    <option value="return">Interested in return transport</option>
+                    <option value="oneway">Interested in one-way transport</option>
                   </select>
                 </div>
               </div>
 
               <div class="price-output">
-                <small>Lion’s Head price</small>
+                <small>Lion’s Head total price</small>
                 <strong id="lions-price">R1400</strong>
                 <span id="lions-note">For 1 person · sunrise hike</span>
+              </div>
+
+              <p class="booking-note">
+                Larger group bookings receive discounted per-person pricing. Transport is available on request within Cape Town city centre and surrounding areas, subject to availability. Return transport is R200 per person and one-way transport is R100 per person. Transport will be confirmed separately via WhatsApp or email.
+              </p>
+
+              <div class="pricing-actions">
+                <a class="btn btn-primary" id="lions-book-link" href="https://pay.yoco.com/r/4ZWxZL" target="_blank" rel="noreferrer">Book now</a>
               </div>
             </div>
 
             <div class="pricing-block">
-              <h5>Table Mountain Hike</h5>
-              <p>Route options include Platteklip Gorge or India Venster.</p>
+              <h5>Table Mountain</h5>
+              <p>Select your route and group size. Final route suitability is confirmed before the hike.</p>
 
               <div class="select-grid">
-                <div class="select-card" style="grid-column: 1 / -1;">
+                <div class="select-card">
+                  <label for="table-route">Select route</label>
+                  <select id="table-route" class="dark-select">
+                    <option value="platteklip">Platteklip Gorge</option>
+                    <option value="india">India Venster</option>
+                  </select>
+                </div>
+
+                <div class="select-card">
                   <label for="table-group-size">Select group size</label>
                   <select id="table-group-size" class="dark-select">
                     <option value="1">1 person</option>
                     <option value="2">2 people</option>
-                    <option value="3-4">3 - 4 people</option>
-                    <option value="5-7">5 - 7 people</option>
-                    <option value="8+">8+ people</option>
+                    <option value="3">3 people</option>
+                    <option value="4">4 people</option>
+                    <option value="5">5 people</option>
+                    <option value="6">6 people</option>
+                    <option value="7">7 people</option>
+                    <option value="8">8 people</option>
+                  </select>
+                </div>
+
+                <div class="select-card">
+                  <label for="table-date">Preferred date</label>
+                  <input id="table-date" class="dark-input" type="date" />
+                </div>
+
+                <div class="select-card">
+                  <label for="table-transport">Transport interest</label>
+                  <select id="table-transport" class="dark-select">
+                    <option value="no">No transport needed</option>
+                    <option value="return">Interested in return transport</option>
+                    <option value="oneway">Interested in one-way transport</option>
                   </select>
                 </div>
               </div>
 
               <div class="price-output">
-                <small>Table Mountain price</small>
+                <small>Table Mountain total price</small>
                 <strong id="table-price">R1600</strong>
-                <span id="table-note">For 1 person · route chosen during booking</span>
+                <span id="table-note">For 1 person · Platteklip Gorge</span>
               </div>
-            </div>
 
-            <div class="pricing-actions">
-              <a class="btn btn-primary" href="https://wa.me/27769007172?text=Hi%20Outdoor%20Addicts%2C%20I%27m%20interested%20in%20a%20group%20hike.%20Please%20get%20in%20touch%20with%20me%20to%20finalise%20the%20booking." target="_blank" rel="noreferrer">Book my group hike</a>
+              <p class="booking-note">
+                Larger group bookings receive discounted per-person pricing. Transport is available on request within Cape Town city centre and surrounding areas, subject to availability. Return transport is R200 per person and one-way transport is R100 per person. Transport will be confirmed separately via WhatsApp or email.
+              </p>
+
+              <div class="pricing-actions">
+                <a class="btn btn-primary" id="table-book-link" href="https://pay.yoco.com/r/2Dzdxp" target="_blank" rel="noreferrer">Book now</a>
+              </div>
             </div>
           </article>
 
@@ -1238,27 +1314,54 @@
             <div class="pricing-label">Private Hikes · Exclusive</div>
             <h4>Book your private hike</h4>
             <p class="pricing-subtext">
-              Ideal for couples, families, friends, and travellers who want a personal, premium guided experience.
+              Ideal for couples, families, friends, and travellers who want a personal, premium guided experience. Final confirmation will be sent via WhatsApp or email.
             </p>
 
             <div class="pricing-block">
               <h5>Private hike pricing</h5>
+
               <div class="select-grid">
-                <div class="select-card" style="grid-column: 1 / -1;">
+                <div class="select-card">
                   <label for="private-group-size">Select group size</label>
                   <select id="private-group-size" class="dark-select">
-                    <option value="1-2">1 - 2 people</option>
-                    <option value="3-4">3 - 4 people</option>
-                    <option value="5-7">5 - 7 people</option>
-                    <option value="8+">8+ people</option>
+                    <option value="1">1 person</option>
+                    <option value="2">2 people</option>
+                    <option value="3">3 people</option>
+                    <option value="4">4 people</option>
+                    <option value="5">5 people</option>
+                    <option value="6">6 people</option>
+                    <option value="7">7 people</option>
+                    <option value="8">8 people</option>
+                  </select>
+                </div>
+
+                <div class="select-card">
+                  <label for="private-date">Preferred date</label>
+                  <input id="private-date" class="dark-input" type="date" />
+                </div>
+
+                <div class="select-card" style="grid-column: 1 / -1;">
+                  <label for="private-transport">Transport interest</label>
+                  <select id="private-transport" class="dark-select">
+                    <option value="no">No transport needed</option>
+                    <option value="return">Interested in return transport</option>
+                    <option value="oneway">Interested in one-way transport</option>
                   </select>
                 </div>
               </div>
 
               <div class="price-output">
-                <small>Private hike price</small>
-                <strong id="private-price">R1750 pp</strong>
-                <span id="private-note">For 1 - 2 people · flexible, premium experience</span>
+                <small>Private hike total price</small>
+                <strong id="private-price">R1750</strong>
+                <span id="private-note">For 1 person · flexible, premium experience</span>
+              </div>
+
+              <p class="booking-note">
+                Larger group bookings receive discounted per-person pricing. Transport is available on request within Cape Town city centre and surrounding areas, subject to availability. Return transport is R200 per person and one-way transport is R100 per person. Transport will be confirmed separately via WhatsApp or email.
+              </p>
+
+              <div class="pricing-actions">
+                <a class="btn btn-primary" id="private-book-link" href="https://pay.yoco.com/r/2be5d5" target="_blank" rel="noreferrer">Book now</a>
               </div>
             </div>
 
@@ -1272,10 +1375,6 @@
                 <span class="pill">Photos &amp; videos</span>
                 <span class="pill">WhatsApp concierge support</span>
               </div>
-            </div>
-
-            <div class="pricing-actions">
-              <a class="btn btn-primary" href="https://wa.me/27769007172?text=Hi%20Outdoor%20Addicts%2C%20I%27m%20interested%20in%20a%20private%20hike.%20Please%20get%20in%20touch%20with%20me%20to%20finalise%20the%20booking." target="_blank" rel="noreferrer">Book my private hike</a>
             </div>
           </article>
         </div>
@@ -1305,6 +1404,7 @@
         </div>
       </div>
     </section>
+
 
     <section id="reviews" class="band fade-in">
       <div class="container">
@@ -1583,65 +1683,87 @@
     });
 
     const lionsPrices = {
-      "1": "R1400",
-      "2": "R1200 pp",
-      "3-4": "R1050 pp",
-      "5-7": "R950 pp",
-      "8+": "R900 pp"
+      "1": { total: "R1400", pp: "R1400 pp", link: "https://pay.yoco.com/r/4ZWxZL" },
+      "2": { total: "R2400", pp: "R1200 pp", link: "https://pay.yoco.com/r/me0PEp" },
+      "3": { total: "R3150", pp: "R1050 pp", link: "https://pay.yoco.com/r/73NaQR" },
+      "4": { total: "R4200", pp: "R1050 pp", link: "https://pay.yoco.com/r/2Qx6p9" },
+      "5": { total: "R4750", pp: "R950 pp", link: "https://pay.yoco.com/r/7vZrYl" },
+      "6": { total: "R5700", pp: "R950 pp", link: "https://pay.yoco.com/r/2wgDYj" },
+      "7": { total: "R6650", pp: "R950 pp", link: "https://pay.yoco.com/r/2be5E0" },
+      "8": { total: "R7200", pp: "R900 pp", link: "https://pay.yoco.com/r/4Gn51A" }
     };
 
     const tablePrices = {
-      "1": "R1600",
-      "2": "R1400 pp",
-      "3-4": "R1250 pp",
-      "5-7": "R1150 pp",
-      "8+": "R1050 pp"
+      "1": { total: "R1600", pp: "R1600 pp", link: "https://pay.yoco.com/r/2Dzdxp" },
+      "2": { total: "R2800", pp: "R1400 pp", link: "https://pay.yoco.com/r/mR5MRJ" },
+      "3": { total: "R3750", pp: "R1250 pp", link: "https://pay.yoco.com/r/me0PEv" },
+      "4": { total: "R5000", pp: "R1250 pp", link: "https://pay.yoco.com/r/mO1k3L" },
+      "5": { total: "R5750", pp: "R1150 pp", link: "https://pay.yoco.com/r/2BGLYG" },
+      "6": { total: "R6900", pp: "R1150 pp", link: "https://pay.yoco.com/r/7vZrYO" },
+      "7": { total: "R8050", pp: "R1150 pp", link: "https://pay.yoco.com/r/7y6EYp" },
+      "8": { total: "R8400", pp: "R1050 pp", link: "https://pay.yoco.com/r/2wgDoM" }
     };
 
     const privatePrices = {
-      "1-2": "R1750 pp",
-      "3-4": "R1500 pp",
-      "5-7": "R1400 pp",
-      "8+": "R1350 pp"
+      "1": { total: "R1750", pp: "R1750 pp", link: "https://pay.yoco.com/r/2be5d5" },
+      "2": { total: "R3500", pp: "R1750 pp", link: "https://pay.yoco.com/r/2DzdJq" },
+      "3": { total: "R4500", pp: "R1500 pp", link: "https://pay.yoco.com/r/mzxNVn" },
+      "4": { total: "R6000", pp: "R1500 pp", link: "https://pay.yoco.com/r/4nJQYd" },
+      "5": { total: "R7000", pp: "R1400 pp", link: "https://pay.yoco.com/r/mMEl5W" },
+      "6": { total: "R8400", pp: "R1400 pp", link: "https://pay.yoco.com/r/mdO5Xg" },
+      "7": { total: "R9800", pp: "R1400 pp", link: "https://pay.yoco.com/r/2LXkpW" },
+      "8": { total: "R10800", pp: "R1350 pp", link: "https://pay.yoco.com/r/7Xl8KK" }
     };
 
     const lionsRoute = document.getElementById('lions-route');
     const lionsGroupSize = document.getElementById('lions-group-size');
     const lionsPrice = document.getElementById('lions-price');
     const lionsNote = document.getElementById('lions-note');
+    const lionsBookLink = document.getElementById('lions-book-link');
 
     function updateLionsPrice() {
       const routeText = lionsRoute.options[lionsRoute.selectedIndex].text;
       const groupText = lionsGroupSize.options[lionsGroupSize.selectedIndex].text;
-      lionsPrice.textContent = lionsPrices[lionsGroupSize.value];
-      lionsNote.textContent = `For ${groupText.toLowerCase()} · ${routeText.toLowerCase()}`;
+      const priceData = lionsPrices[lionsGroupSize.value];
+      lionsPrice.textContent = priceData.total;
+      lionsNote.textContent = `For ${groupText.toLowerCase()} · ${priceData.pp} · ${routeText.toLowerCase()}`;
+      lionsBookLink.href = priceData.link;
     }
 
     lionsRoute.addEventListener('change', updateLionsPrice);
     lionsGroupSize.addEventListener('change', updateLionsPrice);
     updateLionsPrice();
 
+    const tableRoute = document.getElementById('table-route');
     const tableGroupSize = document.getElementById('table-group-size');
     const tablePrice = document.getElementById('table-price');
     const tableNote = document.getElementById('table-note');
+    const tableBookLink = document.getElementById('table-book-link');
 
     function updateTablePrice() {
+      const routeText = tableRoute.options[tableRoute.selectedIndex].text;
       const groupText = tableGroupSize.options[tableGroupSize.selectedIndex].text;
-      tablePrice.textContent = tablePrices[tableGroupSize.value];
-      tableNote.textContent = `For ${groupText.toLowerCase()} · route chosen during booking`;
+      const priceData = tablePrices[tableGroupSize.value];
+      tablePrice.textContent = priceData.total;
+      tableNote.textContent = `For ${groupText.toLowerCase()} · ${priceData.pp} · ${routeText}`;
+      tableBookLink.href = priceData.link;
     }
 
+    tableRoute.addEventListener('change', updateTablePrice);
     tableGroupSize.addEventListener('change', updateTablePrice);
     updateTablePrice();
 
     const privateGroupSize = document.getElementById('private-group-size');
     const privatePrice = document.getElementById('private-price');
     const privateNote = document.getElementById('private-note');
+    const privateBookLink = document.getElementById('private-book-link');
 
     function updatePrivatePrice() {
       const groupText = privateGroupSize.options[privateGroupSize.selectedIndex].text;
-      privatePrice.textContent = privatePrices[privateGroupSize.value];
-      privateNote.textContent = `For ${groupText.toLowerCase()} · flexible, premium experience`;
+      const priceData = privatePrices[privateGroupSize.value];
+      privatePrice.textContent = priceData.total;
+      privateNote.textContent = `For ${groupText.toLowerCase()} · ${priceData.pp} · flexible, premium experience`;
+      privateBookLink.href = priceData.link;
     }
 
     privateGroupSize.addEventListener('change', updatePrivatePrice);
