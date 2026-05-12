@@ -1,7 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Outdoor Addicts | Guided Hiking Tours in Cape Town</title>
@@ -374,6 +376,68 @@
     .band {
       background: linear-gradient(to bottom, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
     }
+
+    .route-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    .route-option-card {
+      background: rgba(255,255,255,0.95);
+      border: 1px solid rgba(255,255,255,0.78);
+      border-radius: 26px;
+      box-shadow: var(--shadow-md);
+      padding: 24px;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .route-option-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .route-option-card h4 {
+      margin: 0;
+      font-size: 1.18rem;
+      letter-spacing: -0.02em;
+    }
+
+    .route-option-card p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .route-details {
+      margin: 16px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      color: #333;
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .route-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .route-pill {
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #6e4c0a;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
 
     .pricing-wrap {
       background: linear-gradient(180deg, #111, #171717);
@@ -987,6 +1051,7 @@
       .pricing-grid,
       .reviews-grid,
       .reviews-grid.active,
+      .route-options,
       .contact-shell,
       .process-grid {
         grid-template-columns: 1fr;
@@ -1127,14 +1192,13 @@
         </div>
       </div>
     </section>
-
     <section id="experiences" class="band fade-in">
       <div class="container">
         <div class="section-head">
           <span class="eyebrow">Popular experiences</span>
-          <h3>The classics</h3>
+          <h3>Choose the route that suits your adventure</h3>
           <p>
-            A quick look at some of our most popular hiking experiences in and around Cape Town.
+            Use this quick guide to compare the classic Cape Town hiking options before choosing your booking in the pricing section.
           </p>
         </div>
 
@@ -1146,8 +1210,13 @@
             <div class="experience-copy">
               <h4>Lion’s Head Summit</h4>
               <p>
-                A classic Cape Town hike with incredible 360-degree views over the city, ocean, and Table Mountain. Best experienced at sunrise or sunset.
+                A moderate Cape Town classic with 360-degree views, a roughly 5km round trip, and an estimated 3–4 hour experience. Best booked for sunrise or sunset.
               </p>
+              <div class="route-pill-row">
+                <span class="route-pill">Sunrise</span>
+                <span class="route-pill">Sunset</span>
+                <span class="route-pill">Moderate</span>
+              </div>
             </div>
           </article>
 
@@ -1158,8 +1227,12 @@
             <div class="experience-copy">
               <h4>Table Mountain Guided Hike</h4>
               <p>
-                Choose from routes like Platteklip Gorge or India Venster depending on your fitness level and the kind of experience you’re looking for.
+                Choose between Platteklip Gorge for a direct summit route or India Venster for a more challenging and technical experience.
               </p>
+              <div class="route-pill-row">
+                <span class="route-pill">Platteklip Gorge</span>
+                <span class="route-pill">India Venster</span>
+              </div>
             </div>
           </article>
 
@@ -1170,13 +1243,58 @@
             <div class="experience-copy">
               <h4>Private Group Adventures</h4>
               <p>
-                Ideal for couples, families, friends, and small groups who want a more personal experience with flexible timing and a custom pace.
+                Ideal if you want a more personal experience. Choose Lion’s Head, Table Mountain, or a custom route suitable for your group’s fitness level, timing, and goals.
               </p>
+              <div class="route-pill-row">
+                <span class="route-pill">Flexible route</span>
+                <span class="route-pill">Custom pace</span>
+                <span class="route-pill">Private guide</span>
+              </div>
             </div>
+          </article>
+        </div>
+
+        <div class="route-options">
+          <article class="route-option-card">
+            <h4>Lion’s Head options</h4>
+            <p>Great for guests wanting iconic views without committing to a full Table Mountain ascent.</p>
+            <ul class="route-details">
+              <li>• Sunrise or sunset available</li>
+              <li>• Moderate difficulty</li>
+              <li>• 360-degree views</li>
+              <li>• Approximately 5km round trip</li>
+              <li>• Approximately 3–4 hours</li>
+            </ul>
+          </article>
+
+          <article class="route-option-card">
+            <h4>Table Mountain options</h4>
+            <p>Choose the route that best matches your fitness, confidence, and appetite for adventure.</p>
+            <ul class="route-details">
+              <li>• Platteklip Gorge: moderate, steep incline</li>
+              <li>• Platteklip Gorge: 2–3 hours to the top</li>
+              <li>• India Venster: challenging and technical</li>
+              <li>• India Venster: approximately 3–4 hours</li>
+              <li>• Cableway ticket not included if applicable</li>
+            </ul>
+          </article>
+
+          <article class="route-option-card">
+            <h4>Private custom routes</h4>
+            <p>Private bookings are best when you want flexibility, personal attention, and route guidance tailored to your group.</p>
+            <ul class="route-details">
+              <li>• Lion’s Head sunrise, sunset, or summit</li>
+              <li>• Table Mountain Platteklip Gorge or India Venster</li>
+              <li>• Custom route suggestions available</li>
+              <li>• Flexible pace and start time</li>
+              <li>• Route suitability confirmed before booking</li>
+            </ul>
           </article>
         </div>
       </div>
     </section>
+
+
     <section id="pricing" class="pricing-wrap fade-in">
       <div class="container">
         <div class="section-head">
@@ -1321,6 +1439,18 @@
               <h5>Private hike pricing</h5>
 
               <div class="select-grid">
+                <div class="select-card">
+                  <label for="private-experience">Preferred experience</label>
+                  <select id="private-experience" class="dark-select">
+                    <option value="lions-sunrise">Lion’s Head sunrise</option>
+                    <option value="lions-sunset">Lion’s Head sunset</option>
+                    <option value="lions-summit">Lion’s Head summit</option>
+                    <option value="table-india">Table Mountain - India Venster</option>
+                    <option value="table-platteklip">Table Mountain - Platteklip Gorge</option>
+                    <option value="custom">Custom route</option>
+                  </select>
+                </div>
+
                 <div class="select-card">
                   <label for="private-group-size">Select group size</label>
                   <select id="private-group-size" class="dark-select">
@@ -1753,19 +1883,22 @@
     tableGroupSize.addEventListener('change', updateTablePrice);
     updateTablePrice();
 
+    const privateExperience = document.getElementById('private-experience');
     const privateGroupSize = document.getElementById('private-group-size');
     const privatePrice = document.getElementById('private-price');
     const privateNote = document.getElementById('private-note');
     const privateBookLink = document.getElementById('private-book-link');
 
     function updatePrivatePrice() {
+      const experienceText = privateExperience.options[privateExperience.selectedIndex].text;
       const groupText = privateGroupSize.options[privateGroupSize.selectedIndex].text;
       const priceData = privatePrices[privateGroupSize.value];
       privatePrice.textContent = priceData.total;
-      privateNote.textContent = `For ${groupText.toLowerCase()} · ${priceData.pp} · flexible, premium experience`;
+      privateNote.textContent = `For ${groupText.toLowerCase()} · ${priceData.pp} · ${experienceText}`;
       privateBookLink.href = priceData.link;
     }
 
+    privateExperience.addEventListener('change', updatePrivatePrice);
     privateGroupSize.addEventListener('change', updatePrivatePrice);
     updatePrivatePrice();
 
