@@ -1,0 +1,1 @@
+Upload all files in this folder to your GitHub project root. Replace existing index.html. Keep styles.css and script.js in the same folder as the HTML pages. Commit and push using GitHub Desktop.
