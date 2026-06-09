@@ -185,3 +185,49 @@ body:not(.home-page) article strong {
       url("https://res.cloudinary.com/dul5jzcpv/image/upload/v1776022049/DSC02462-Enhanced-NR_tv0sik.jpg") left center / cover scroll no-repeat !important;
   }
 }
+
+
+
+/* Force mobile hero overlay to display correctly */
+@media (max-width: 820px) {
+  .home-page .hero-bg {
+    position: relative !important;
+    overflow: hidden !important;
+    background-image: url("https://res.cloudinary.com/dul5jzcpv/image/upload/v1776022049/DSC02462-Enhanced-NR_tv0sik.jpg") !important;
+    background-position: left center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-attachment: scroll !important;
+  }
+
+  .home-page .hero-bg::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 1 !important;
+    background: linear-gradient(
+      180deg,
+      rgba(0,0,0,0.30) 0%,
+      rgba(0,0,0,0.48) 45%,
+      rgba(0,0,0,0.72) 100%
+    ) !important;
+    pointer-events: none !important;
+  }
+
+  .home-page .hero-overlay {
+    position: relative !important;
+    z-index: 2 !important;
+    background: transparent !important;
+  }
+
+  .home-page .hero-content {
+    position: relative !important;
+    z-index: 3 !important;
+  }
+
+  .home-page .hero-content h2,
+  .home-page .mini-card {
+    color: #ffffff !important;
+    text-shadow: 0 2px 18px rgba(0,0,0,0.35);
+  }
+}
