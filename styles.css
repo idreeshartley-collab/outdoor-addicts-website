@@ -231,3 +231,89 @@ body:not(.home-page) article strong {
     text-shadow: 0 2px 18px rgba(0,0,0,0.35);
   }
 }
+
+
+
+/* Mobile frozen hero overlay final fix */
+@media (max-width: 820px) {
+  .home-page {
+    position: relative !important;
+    background: #111 !important;
+  }
+
+  .home-page::before {
+    content: "" !important;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: -2 !important;
+    background-image: url("https://res.cloudinary.com/dul5jzcpv/image/upload/v1776022049/DSC02462-Enhanced-NR_tv0sik.jpg") !important;
+    background-position: 42% center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    pointer-events: none !important;
+    transform: translateZ(0);
+  }
+
+  .home-page::after {
+    content: "" !important;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: -1 !important;
+    background: linear-gradient(
+      180deg,
+      rgba(0,0,0,0.28) 0%,
+      rgba(0,0,0,0.52) 45%,
+      rgba(0,0,0,0.74) 100%
+    ) !important;
+    pointer-events: none !important;
+  }
+
+  .home-page .hero-bg {
+    background: transparent !important;
+    min-height: 90vh !important;
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  .home-page .hero-bg::before {
+    display: none !important;
+    content: none !important;
+  }
+
+  .home-page .hero-overlay {
+    position: relative !important;
+    z-index: 2 !important;
+    background: transparent !important;
+  }
+
+  .home-page .hero-content {
+    position: relative !important;
+    z-index: 3 !important;
+    min-height: calc(90vh - 90px) !important;
+  }
+
+  .home-page main > section:nth-of-type(2),
+  .home-page main > section:nth-of-type(3) {
+    background: transparent !important;
+    position: relative !important;
+  }
+
+  .home-page main > section:nth-of-type(2)::before,
+  .home-page main > section:nth-of-type(3)::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: rgba(0,0,0,0.46) !important;
+    pointer-events: none !important;
+  }
+
+  .home-page .hero-content h2,
+  .home-page .mini-card,
+  .home-page main > section:nth-of-type(2) .section-head h3,
+  .home-page main > section:nth-of-type(3) .section-head h3,
+  .home-page main > section:nth-of-type(2) .section-head p,
+  .home-page main > section:nth-of-type(3) .section-head p {
+    color: #ffffff !important;
+    text-shadow: 0 2px 18px rgba(0,0,0,0.38);
+  }
+}
