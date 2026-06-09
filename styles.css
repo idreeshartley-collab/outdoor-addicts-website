@@ -193,3 +193,20 @@ body:not(.home-page) .form-panel p {
     color: #ffffff;
   }
 }
+
+
+/* Mobile hero image visibility fix */
+@media (max-width: 820px) {
+  .home-page .hero-bg {
+    background-image: url("https://res.cloudinary.com/dul5jzcpv/image/upload/v1776022049/DSC02462-Enhanced-NR_tv0sik.jpg") !important;
+    background-position: left center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-attachment: scroll !important;
+    min-height: 90vh !important;
+  }
+
+  .home-page .hero-overlay {
+    background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.58)) !important;
+  }
+}
