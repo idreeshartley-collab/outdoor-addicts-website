@@ -31,3 +31,24 @@
 .single-pricing-grid{grid-template-columns:1fr}
 .pricing-toggle.active{background:#fff;color:#111}
 @media(max-width:1024px){.pricing-choice-grid{grid-template-columns:1fr}}
+
+
+/* Simplified homepage updates */
+.hero-bg {
+  background-attachment: fixed;
+}
+
+.whatsapp-float {
+  background: #25D366 !important;
+  color: #ffffff !important;
+}
+
+.whatsapp-float:hover {
+  background: #1ebe5d !important;
+}
+
+@media (max-width: 820px) {
+  .hero-bg {
+    background-attachment: scroll;
+  }
+}
