@@ -7,3 +7,31 @@ const privatePrices={"1":{total:"R1750",pp:"R1750 pp",link:"https://pay.yoco.com
 function setupBooking(section){const groupSize=document.getElementById(`${section}-group-size`),price=document.getElementById(`${section}-price`),note=document.getElementById(`${section}-note`),link=document.getElementById(`${section}-book-link`);if(!groupSize||!price||!note||!link)return;const route=document.getElementById(`${section}-route`),experience=document.getElementById(`${section}-experience`),prices=section==='lions'?lionsPrices:section==='table'?tablePrices:privatePrices;function update(){const selected=prices[groupSize.value],groupText=groupSize.options[groupSize.selectedIndex].text;let optionText='';if(route)optionText=route.options[route.selectedIndex].text;if(experience)optionText=experience.options[experience.selectedIndex].text;price.textContent=selected.total;note.textContent=`For ${groupText.toLowerCase()} · ${selected.pp}${optionText?` · ${optionText}`:''}`;link.href=selected.link}groupSize.addEventListener('change',update);route?.addEventListener('change',update);experience?.addEventListener('change',update);update()}
 setupBooking('lions');setupBooking('table');setupBooking('private');
 const reviewPages=Array.from(document.querySelectorAll('[data-review-page]')),reviewDots=Array.from(document.querySelectorAll('[data-review-dot]'));function showReviewPage(index){reviewPages.forEach((page,i)=>page.classList.toggle('active',i===index));reviewDots.forEach((dot,i)=>dot.classList.toggle('active',i===index))}reviewDots.forEach(dot=>dot.addEventListener('click',()=>showReviewPage(Number(dot.dataset.reviewDot))));if(reviewPages.length)showReviewPage(0);
+
+
+// Accordion pricing chooser
+const pricingToggles = Array.from(document.querySelectorAll('.pricing-toggle'));
+const pricingPanels = Array.from(document.querySelectorAll('.pricing-detail-panel'));
+
+pricingToggles.forEach((toggle) => {
+  toggle.addEventListener('click', () => {
+    const targetId = toggle.dataset.target;
+    const targetPanel = document.getElementById(targetId);
+    const isOpen = targetPanel && targetPanel.classList.contains('active');
+
+    pricingPanels.forEach((panel) => panel.classList.remove('active'));
+    pricingToggles.forEach((button) => {
+      button.classList.remove('active');
+      if (button.dataset.target === 'group-pricing-panel') button.textContent = 'View Popular Guided Hike Pricing';
+      if (button.dataset.target === 'private-pricing-panel') button.textContent = 'View Private Hike Pricing';
+    });
+
+    if (!isOpen && targetPanel) {
+      targetPanel.classList.add('active');
+      toggle.classList.add('active');
+      if (targetId === 'group-pricing-panel') toggle.textContent = 'Hide Popular Guided Hike Pricing';
+      if (targetId === 'private-pricing-panel') toggle.textContent = 'Hide Private Hike Pricing';
+      setTimeout(() => targetPanel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    }
+  });
+});
