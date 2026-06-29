@@ -3,10 +3,11 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="stylesheet" href="styles.css" /></head><body class="home-page"><header class="site-header">
+  <link rel="stylesheet" href="styles.css" />  <link rel="canonical" href="https://outdoor-addicts.com/">
+</head><body class="home-page"><header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="index.html" aria-label="Outdoor Addicts home">
-        <div class="brand-badge"><img src="https://res.cloudinary.com/dul5jzcpv/image/upload/v1776021816/IMG_0594_ehi1do.jpg" alt="Outdoor Addicts logo" /></div>
+        <div class="brand-badge"><img src="outdoor-addicts-logo.png" alt="Outdoor Addicts logo" /></div>
         <div class="brand-copy"><h1>Outdoor Addicts</h1><p>Live Your Wild</p></div>
       </a>
       <button class="menu-toggle" type="button" aria-label="Open menu">Menu</button>
@@ -21,11 +22,60 @@
   </header><main>
 <section class="hero-bg"><div class="hero-overlay"><div class="container hero-content"><span class="eyebrow">Premium Cape Town guided adventures</span><h2>Explore Cape Town’s iconic mountains with confidence</h2><div class="hero-points"><div class="mini-card">Professional guided experiences</div><div class="mini-card">Group and private hike options</div><div class="mini-card">Sunrise, sunset, and custom adventures</div></div></div></div></section>
 <section><div class="container"><div class="section-head"><span class="eyebrow">Why choose us</span><h3>Local knowledge, strong safety standards, and a personal touch</h3><p>We create guided outdoor experiences that feel smooth, professional, and memorable from first message to final summit photo.</p></div><div class="cards-2"><article class="card"><h4>For every level</h4><p>Whether you’re an experienced hiker or a first-timer, we help match the route, pace, and overall experience to your comfort level.</p></article><article class="card"><h4>Qualified guides</h4><p>Guided by qualified local professionals with a strong focus on route management, safety, and creating a relaxed mountain experience.</p></article></div></div></section>
-<section class="band" id="experiences"><div class="container"><div class="section-head"><span class="eyebrow">Popular experiences</span><h3>Choose the route that suits your adventure</h3><p>A simplified guide to help guests choose the right hike before moving to booking and payment.</p></div><div class="cards-3">
-<article class="card experience-card"><img class="experience-image" src="https://res.cloudinary.com/dul5jzcpv/image/upload/v1776190344/231597A4-A8CE-4CB8-9A63-1FE86FDE861D_peghgd.jpg" alt="Lion’s Head hike in Cape Town" /><div class="experience-copy"><h4>Lion’s Head Summit</h4><p>A Cape Town classic with big views, a rewarding summit, and a shorter hiking experience than Table Mountain.</p><ul class="detail-list"><li>• Difficulty: Moderate</li><li>• Views: 360° city, ocean and mountain views</li><li>• Distance: ±5km round trip</li><li>• Duration: ±3–4 hours</li></ul><div class="pill-row"><span class="route-pill">Sunrise</span><span class="route-pill">Sunset</span><span class="route-pill">Summit</span></div></div></article>
-<article class="card experience-card"><img class="experience-image" src="https://res.cloudinary.com/dul5jzcpv/image/upload/v1776189856/image0_1_cwevn9.jpg" alt="Table Mountain hike in Cape Town" /><div class="experience-copy"><h4>Table Mountain</h4><p>Choose the route that best matches your confidence, fitness level, and appetite for adventure.</p><ul class="detail-list"><li>• Platteklip Gorge: direct, moderate, steep incline</li><li>• Platteklip Gorge: ±2–3 hours to the top</li><li>• India Venster: challenging and technical</li><li>• India Venster: ±3–4 hours</li></ul><div class="pill-row"><span class="route-pill">Platteklip Gorge</span><span class="route-pill">India Venster</span></div></div></article>
-<article class="card experience-card"><img class="experience-image" src="https://res.cloudinary.com/dul5jzcpv/image/upload/v1776190401/672C59A4-0046-4FF0-9199-8CA387A36F17_sisxtj.jpg" alt="Private hiking adventure in Cape Town" /><div class="experience-copy"><h4>Private Adventures</h4><p>A more personal guided hike with flexibility around route, pace and timing.</p><ul class="detail-list"><li>• Choose Lion’s Head or Table Mountain</li><li>• Custom route suggestions available</li><li>• Flexible pace and start time</li><li>• Route suitability confirmed before booking</li></ul><div class="pill-row"><span class="route-pill">Custom route</span><span class="route-pill">Private guide</span></div></div></article>
-</div></div></section>
+
+<section class="band premium-experiences" id="experiences">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Popular experiences</span>
+      <h3>Choose your Cape Town classic</h3>
+      <p>Two iconic routes, guided with local knowledge, safety awareness and a smooth booking experience.</p>
+    </div>
+
+    <div class="premium-experience-stack">
+
+      <article class="premium-experience-banner" style="background-image:url('lions-head-feature.jpg');">
+        <div class="premium-experience-content">
+          <span class="pricing-section-label group-label">Lion’s Head</span>
+          <h4>Lion’s Head Sunrise, Sunset or Summit</h4>
+          <p>A Cape Town favourite with big views, a rewarding summit and a shorter hiking experience than Table Mountain.</p>
+
+          <ul class="feature-detail-list">
+            <li>• Difficulty: Moderate</li>
+            <li>• Distance: ±5km round trip</li>
+            <li>• Duration: ±3–4 hours</li>
+            <li>• Best for sunrise, sunset and classic summit views</li>
+          </ul>
+
+          <div class="experience-feature-actions">
+            <a class="btn btn-primary" href="#pricing" data-open-panel="group-pricing-panel">Book your group hike</a>
+            <a class="btn btn-light" href="#pricing" data-open-panel="private-pricing-panel">Book your private hike</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="premium-experience-banner table-banner" style="background-image:url('table-mountain-feature.jpg');">
+        <div class="premium-experience-content">
+          <span class="pricing-section-label group-label">Table Mountain</span>
+          <h4>Table Mountain Platteklip Gorge or India Venster</h4>
+          <p>Choose the route that matches your confidence, fitness and appetite for adventure, from a direct summit route to a more technical mountain experience.</p>
+
+          <ul class="feature-detail-list">
+            <li>• Platteklip Gorge: direct, steep and non-technical</li>
+            <li>• India Venster: adventurous, exposed and technical</li>
+            <li>• Duration: ±2–4 hours depending on route</li>
+            <li>• Route suitability confirmed before booking</li>
+          </ul>
+
+          <div class="experience-feature-actions">
+            <a class="btn btn-primary" href="#pricing" data-open-panel="group-pricing-panel">Book your group hike</a>
+            <a class="btn btn-light" href="#pricing" data-open-panel="private-pricing-panel">Book your private hike</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
 
 <section id="pricing" class="pricing-wrap">
   <div class="container">
@@ -47,7 +97,7 @@
           <li>✓ Table Mountain India Venster</li>
         </ul>
         <p class="choice-note">Select your group size to view pricing. Larger groups benefit from discounted per-person rates.</p>
-        <button class="btn btn-primary pricing-toggle" type="button" data-target="group-pricing-panel">View Popular Guided Hike Pricing</button>
+        <button class="btn btn-primary pricing-toggle" type="button" data-target="group-pricing-panel">View group hike pricing</button>
       </article>
 
       <article class="pricing-choice-card private-choice-card">
@@ -61,7 +111,7 @@
           <li>✓ Personalised experience</li>
         </ul>
         <p class="choice-note">Private hikes are priced per booking group, with better value available for larger groups.</p>
-        <button class="btn btn-primary pricing-toggle" type="button" data-target="private-pricing-panel">View Private Hike Pricing</button>
+        <button class="btn btn-primary pricing-toggle" type="button" data-target="private-pricing-panel">View private hike pricing</button>
       </article>
     </div>
 

@@ -22,16 +22,33 @@ pricingToggles.forEach((toggle) => {
     pricingPanels.forEach((panel) => panel.classList.remove('active'));
     pricingToggles.forEach((button) => {
       button.classList.remove('active');
-      if (button.dataset.target === 'group-pricing-panel') button.textContent = 'View Popular Guided Hike Pricing';
-      if (button.dataset.target === 'private-pricing-panel') button.textContent = 'View Private Hike Pricing';
+      if (button.dataset.target === 'group-pricing-panel') button.textContent = 'View group hike pricing';
+      if (button.dataset.target === 'private-pricing-panel') button.textContent = 'View private hike pricing';
     });
 
     if (!isOpen && targetPanel) {
       targetPanel.classList.add('active');
       toggle.classList.add('active');
-      if (targetId === 'group-pricing-panel') toggle.textContent = 'Hide Popular Guided Hike Pricing';
-      if (targetId === 'private-pricing-panel') toggle.textContent = 'Hide Private Hike Pricing';
+      if (targetId === 'group-pricing-panel') toggle.textContent = 'Hide group hike pricing';
+      if (targetId === 'private-pricing-panel') toggle.textContent = 'Hide private hike pricing';
       setTimeout(() => targetPanel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
     }
+  });
+});
+
+
+// Open pricing panel from popular experience buttons
+document.querySelectorAll('[data-open-panel]').forEach((link) => {
+  link.addEventListener('click', () => {
+    const targetId = link.getAttribute('data-open-panel');
+    const matchingToggle = document.querySelector(`.pricing-toggle[data-target="${targetId}"]`);
+    const targetPanel = document.getElementById(targetId);
+    setTimeout(() => {
+      if (targetPanel && !targetPanel.classList.contains('active') && matchingToggle) {
+        matchingToggle.click();
+      } else if (targetPanel) {
+        targetPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 120);
   });
 });

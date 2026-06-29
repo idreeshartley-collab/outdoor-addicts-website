@@ -9,4 +9,11 @@ Form button link:
 https://forms.gle/R7CvoowBzyrAfuDi9
 
 After deployment, your page should be:
-https://www.outdooraddictsct.co.za/waiver.html
+https://outdoor-addicts.com/waiver.html
+
+
+Updated deployment notes:
+- Primary domain: https://outdoor-addicts.com
+- Old domain redirects handled by vercel.json.
+- Replace all files/folders in your GitHub project root with this package.
+- Keep the blog folder in the root.

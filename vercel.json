@@ -1,0 +1,37 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "outdooraddictsct.co.za"
+        }
+      ],
+      "destination": "https://outdoor-addicts.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.outdooraddictsct.co.za"
+        }
+      ],
+      "destination": "https://outdoor-addicts.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.outdoor-addicts.com"
+        }
+      ],
+      "destination": "https://outdoor-addicts.com/$1",
+      "permanent": true
+    }
+  ]
+}
