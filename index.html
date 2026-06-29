@@ -47,8 +47,8 @@
           </ul>
 
           <div class="experience-feature-actions">
-            <a class="btn btn-primary" href="#pricing" data-open-panel="group-pricing-panel">Book your group hike</a>
-            <a class="btn btn-light" href="#pricing" data-open-panel="private-pricing-panel">Book your private hike</a>
+            <a class="btn btn-primary" href="#pricing" data-open-pricing="lions-group">Book your group hike</a>
+            <a class="btn btn-light" href="#pricing" data-open-pricing="lions-private">Book your private hike</a>
           </div>
         </div>
       </article>
@@ -67,8 +67,8 @@
           </ul>
 
           <div class="experience-feature-actions">
-            <a class="btn btn-primary" href="#pricing" data-open-panel="group-pricing-panel">Book your group hike</a>
-            <a class="btn btn-light" href="#pricing" data-open-panel="private-pricing-panel">Book your private hike</a>
+            <a class="btn btn-primary" href="#pricing" data-open-pricing="table-group">Book your group hike</a>
+            <a class="btn btn-light" href="#pricing" data-open-pricing="table-private">Book your private hike</a>
           </div>
         </div>
       </article>
@@ -77,182 +77,146 @@
   </div>
 </section>
 
-<section id="pricing" class="pricing-wrap">
+
+<section id="pricing" class="pricing-wrap simplified-pricing">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow" style="color:#f4d38b;">Pricing</span>
-      <h3>Choose your hiking style</h3>
-      
+      <span class="eyebrow" style="color:#f4d38b;">Booking options</span>
+      <h3>Select an experience above to view pricing</h3>
+      <p>Pricing appears based on the route and booking style you choose from Lion’s Head or Table Mountain.</p>
     </div>
 
-    <div class="pricing-choice-grid">
-      <article class="pricing-choice-card group-choice-card">
-        <div class="pricing-label">Popular Guided Hikes</div>
-        <h4>Popular Guided Hikes</h4>
-        <p>Join a guided group hike on Cape Town’s most iconic routes at a set start time. Select your route and group size to view the correct total price.</p>
-        <ul class="choice-list">
-          <li>✓ Lion’s Head sunrise</li>
-          <li>✓ Lion’s Head sunset</li>
-          <li>✓ Table Mountain Platteklip Gorge</li>
-          <li>✓ Table Mountain India Venster</li>
-        </ul>
-        <p class="choice-note">Select your group size to view pricing. Larger groups benefit from discounted per-person rates.</p>
-        <button class="btn btn-primary pricing-toggle" type="button" data-target="group-pricing-panel">View group hike pricing</button>
-      </article>
-
-      <article class="pricing-choice-card private-choice-card">
-        <div class="pricing-label">Private Guided Adventures</div>
-        <h4>Private Guided Adventures</h4>
-        <p>A fully private guided experience tailored to your route, group, pace and preferred hiking style.</p>
-        <ul class="choice-list">
-          <li>✓ Exclusive private guide</li>
-          <li>✓ Flexible route options</li>
-          <li>✓ Custom pace</li>
-          <li>✓ Personalised experience</li>
-        </ul>
-        <p class="choice-note">Private hikes are priced per booking group, with better value available for larger groups.</p>
-        <button class="btn btn-primary pricing-toggle" type="button" data-target="private-pricing-panel">View private hike pricing</button>
-      </article>
-    </div>
-
-    <div id="group-pricing-panel" class="pricing-detail-panel">
+    <div id="lions-group" class="pricing-detail-panel direct-pricing-panel">
       <div class="pricing-panel-head">
-        <span class="pricing-section-label group-label">Popular guided hikes</span>
-        <h4>Popular Guided Hike Pricing</h4>
-        <p>Choose your route, group size, preferred date and transport interest. Prices shown are total booking prices.</p>
+        <span class="pricing-section-label group-label">Lion’s Head · Group hike</span>
+        <h4>Lion’s Head Group Hike Pricing</h4>
+        <p>Join a guided Lion’s Head group-style hike at a set start time. Choose sunrise or sunset, then select your group size to view the total booking price.</p>
       </div>
 
-      <div class="pricing-grid single-pricing-grid">
-        <article class="pricing-card group-pricing-card">
-          <div class="pricing-block">
-            <div class="pricing-section-label group-label">Group hike option</div>
-            <h5>Lion’s Head Group Hike</h5>
-            <p>Available as sunrise or sunset. Select your group size to see the total booking price.</p>
+      <article class="pricing-card group-pricing-card">
+        <div class="pricing-block">
+          <h5>Lion’s Head Group Hike</h5>
+          <p>Available as sunrise or sunset.</p>
 
-            <div class="select-grid">
-              <div class="select-card">
-                <label for="lions-route">Select option</label>
-                <select id="lions-route" class="dark-select"><option>Sunrise hike</option><option>Sunset hike</option></select>
-              </div>
-              <div class="select-card">
-                <label for="lions-group-size">Group size</label>
-                <select id="lions-group-size" class="dark-select">
-                  <option value="1">1 person</option><option value="2">2 people</option><option value="3">3 people</option><option value="4">4 people</option>
-                  <option value="5">5 people</option><option value="6">6 people</option><option value="7">7 people</option><option value="8">8 people</option>
-                </select>
-              </div>
-              <div class="select-card"><label>Preferred date</label><input class="dark-input" type="date" /></div>
-              <div class="select-card">
-                <label>Transport interest</label>
-                <select class="dark-select"><option>No transport needed</option><option>Interested in return transport</option><option>Interested in one-way transport</option></select>
-              </div>
+          <div class="select-grid">
+            <div class="select-card">
+              <label for="lions-route">Select option</label>
+              <select id="lions-route" class="dark-select"><option>Sunrise hike</option><option>Sunset hike</option></select>
             </div>
-
-            <div class="price-output"><small>Lion’s Head group hike total</small><strong id="lions-price">R1400</strong><span id="lions-note">For 1 person · R1400 pp · Sunrise hike</span></div>
-            <div class="pricing-helper-box">This is a group hike booking price. The total updates according to the number of guests selected.</div>
-
-            <ul class="good-to-know">
-              <li>• Larger group prices already include a group discount.</li>
-              <li>• Transport is available on request within Cape Town city centre and surrounds.</li>
-              <li>• Return transport: R200 pp. One-way: R100 pp.</li>
-              <li>• Transport is subject to availability and confirmed separately.</li>
-            </ul>
-            <div class="pricing-actions"><a class="btn btn-primary" id="lions-book-link" href="https://pay.yoco.com/r/4ZWxZL" target="_blank" rel="noreferrer">Book now</a></div>
-          </div>
-
-          <div class="pricing-block">
-            <div class="pricing-section-label group-label">Group hike option</div>
-            <h5>Table Mountain Group Hike</h5>
-            <p>Choose Platteklip Gorge or India Venster. Select your group size to see the total booking price.</p>
-
-            <div class="select-grid">
-              <div class="select-card">
-                <label for="table-route">Select route</label>
-                <select id="table-route" class="dark-select"><option>Platteklip Gorge</option><option>India Venster</option></select>
-              </div>
-              <div class="select-card">
-                <label for="table-group-size">Group size</label>
-                <select id="table-group-size" class="dark-select">
-                  <option value="1">1 person</option><option value="2">2 people</option><option value="3">3 people</option><option value="4">4 people</option>
-                  <option value="5">5 people</option><option value="6">6 people</option><option value="7">7 people</option><option value="8">8 people</option>
-                </select>
-              </div>
-              <div class="select-card"><label>Preferred date</label><input class="dark-input" type="date" /></div>
-              <div class="select-card">
-                <label>Transport interest</label>
-                <select class="dark-select"><option>No transport needed</option><option>Interested in return transport</option><option>Interested in one-way transport</option></select>
-              </div>
+            <div class="select-card">
+              <label for="lions-group-size">Group size</label>
+              <select id="lions-group-size" class="dark-select">
+                <option value="1">1 person</option><option value="2">2 people</option><option value="3">3 people</option><option value="4">4 people</option>
+                <option value="5">5 people</option><option value="6">6 people</option><option value="7">7 people</option><option value="8">8 people</option>
+              </select>
             </div>
-
-            <div class="price-output"><small>Table Mountain group hike total</small><strong id="table-price">R1600</strong><span id="table-note">For 1 person · R1600 pp · Platteklip Gorge</span></div>
-            <div class="pricing-helper-box">This is a group hike booking price. The total updates according to the number of guests selected.</div>
-
-            <ul class="good-to-know">
-              <li>• Larger group prices already include a group discount.</li>
-              <li>• Transport is available on request within Cape Town city centre and surrounds.</li>
-              <li>• Return transport: R200 pp. One-way: R100 pp.</li>
-              <li>• Transport is subject to availability and confirmed separately.</li>
-            </ul>
-            <div class="pricing-actions"><a class="btn btn-primary" id="table-book-link" href="https://pay.yoco.com/r/2Dzdxp" target="_blank" rel="noreferrer">Book now</a></div>
+            <div class="select-card"><label>Preferred date</label><input class="dark-input" type="date" /></div>
+            <div class="select-card"><label>Transport interest</label><select class="dark-select"><option>No transport needed</option><option>Interested in return transport</option><option>Interested in one-way transport</option></select></div>
           </div>
 
-          <div class="info-wrap">
-            <article class="info-chip"><h4>What’s included (Popular Guided Hikes)</h4><ul class="compact-list"><li>✓ Qualified local hiking guide</li><li>✓ Safety briefing and route management</li><li>✓ First aid and emergency preparedness</li><li>✓ Headlamps for sunrise and sunset hikes</li><li>✓ Photos and videos</li><li>✓ Local stories</li></ul></article>
-            <article class="info-chip"><h4>Not included</h4><ul class="compact-list"><li>✕ Transport (available on request)</li><li>✕ Snacks and water</li><li>✕ Entrance fees (if applicable)</li><li>✕ Table Mountain Cableway ticket (if applicable)</li></ul></article>
-          </div>
-        </article>
-      </div>
+          <div class="price-output"><small>Lion’s Head group hike total</small><strong id="lions-price">R1400</strong><span id="lions-note">For 1 person · R1400 pp · Sunrise hike</span></div>
+          <div class="pricing-helper-box">This is a group hike booking price. Larger groups benefit from discounted per-person rates.</div>
+          <ul class="good-to-know"><li>• Transport is available on request within Cape Town city centre and surrounds.</li><li>• Return transport: R200 pp. One-way: R100 pp.</li><li>• Transport is subject to availability and confirmed separately.</li></ul>
+          <div class="pricing-actions"><a class="btn btn-primary" id="lions-book-link" href="https://pay.yoco.com/r/4ZWxZL" target="_blank" rel="noreferrer">Book now</a></div>
+        </div>
+
+        <div class="info-wrap">
+          <article class="info-chip"><h4>What’s included</h4><ul class="compact-list"><li>✓ Qualified local hiking guide</li><li>✓ Safety briefing and route management</li><li>✓ First aid and emergency preparedness</li><li>✓ Headlamps for sunrise and sunset hikes</li><li>✓ Photos and videos</li><li>✓ Local stories</li></ul></article>
+          <article class="info-chip"><h4>Not included</h4><ul class="compact-list"><li>✕ Transport (available on request)</li><li>✕ Snacks and water</li><li>✕ Entrance fees (if applicable)</li></ul></article>
+        </div>
+      </article>
     </div>
 
-    <div id="private-pricing-panel" class="pricing-detail-panel">
+    <div id="table-group" class="pricing-detail-panel direct-pricing-panel">
       <div class="pricing-panel-head">
-        <span class="pricing-section-label private-label">Private guided adventures</span>
-        <h4>Private Guided Adventure Pricing</h4>
-        <p>Choose your preferred private experience, group size, date and transport interest. Prices shown are total booking prices.</p>
+        <span class="pricing-section-label group-label">Table Mountain · Group hike</span>
+        <h4>Table Mountain Group Hike Pricing</h4>
+        <p>Join a guided Table Mountain group-style hike at a set start time. Choose Platteklip Gorge or India Venster, then select your group size to view the total booking price.</p>
       </div>
 
-      <div class="pricing-grid single-pricing-grid">
-        <article class="pricing-card private-pricing-card">
-          <div class="pricing-block">
-            <div class="pricing-section-label private-label">Private hike option</div>
-            <h5>Private Hike Pricing</h5>
+      <article class="pricing-card group-pricing-card">
+        <div class="pricing-block">
+          <h5>Table Mountain Group Hike</h5>
+          <p>Choose Platteklip Gorge or India Venster.</p>
 
-            <div class="select-grid">
-              <div class="select-card">
-                <label for="private-experience">Preferred experience</label>
-                <select id="private-experience" class="dark-select"><option>Lion’s Head sunrise</option><option>Lion’s Head sunset</option><option>Lion’s Head summit</option><option>Table Mountain - India Venster</option><option>Table Mountain - Platteklip Gorge</option><option>Custom route</option></select>
-              </div>
-              <div class="select-card">
-                <label for="private-group-size">Group size</label>
-                <select id="private-group-size" class="dark-select">
-                  <option value="1">1 person</option><option value="2">2 people</option><option value="3">3 people</option><option value="4">4 people</option>
-                  <option value="5">5 people</option><option value="6">6 people</option><option value="7">7 people</option><option value="8">8 people</option>
-                </select>
-              </div>
-              <div class="select-card"><label>Preferred date</label><input class="dark-input" type="date" /></div>
-              <div class="select-card">
-                <label>Transport interest</label>
-                <select class="dark-select"><option>No transport needed</option><option>Interested in return transport</option><option>Interested in one-way transport</option></select>
-              </div>
-            </div>
-
-            <div class="price-output"><small>Private hike total</small><strong id="private-price">R1750</strong><span id="private-note">For 1 person · R1750 pp · Lion’s Head sunrise</span></div>
-            <div class="pricing-helper-box">This is a private hike booking price. Your guide is reserved exclusively for your booking.</div>
-
-            <ul class="good-to-know">
-              <li>• Larger group prices already include a group discount.</li>
-              <li>• Transport is available on request within Cape Town city centre and surrounds.</li>
-              <li>• Return transport: R200 pp. One-way: R100 pp.</li>
-              <li>• Transport is subject to availability and confirmed separately.</li>
-            </ul>
-            <div class="pricing-actions"><a class="btn btn-primary" id="private-book-link" href="https://pay.yoco.com/r/2be5d5" target="_blank" rel="noreferrer">Book now</a></div>
+          <div class="select-grid">
+            <div class="select-card"><label for="table-route">Select route</label><select id="table-route" class="dark-select"><option>Platteklip Gorge</option><option>India Venster</option></select></div>
+            <div class="select-card"><label for="table-group-size">Group size</label><select id="table-group-size" class="dark-select"><option value="1">1 person</option><option value="2">2 people</option><option value="3">3 people</option><option value="4">4 people</option><option value="5">5 people</option><option value="6">6 people</option><option value="7">7 people</option><option value="8">8 people</option></select></div>
+            <div class="select-card"><label>Preferred date</label><input class="dark-input" type="date" /></div>
+            <div class="select-card"><label>Transport interest</label><select class="dark-select"><option>No transport needed</option><option>Interested in return transport</option><option>Interested in one-way transport</option></select></div>
           </div>
-          <div class="info-wrap">
-            <article class="info-chip"><h4>What’s included (Private Guided Adventures)</h4><ul class="compact-list"><li>✓ Exclusive qualified local hiking guide</li><li>✓ Safety briefing and route management</li><li>✓ First aid and emergency preparedness</li><li>✓ Flexible start time where possible</li><li>✓ Custom pace and route guidance</li><li>✓ Photos, videos and local stories</li></ul></article>
-            <article class="info-chip"><h4>Not included</h4><ul class="compact-list"><li>✕ Transport (available on request)</li><li>✕ Snacks and water</li><li>✕ Entrance fees (if applicable)</li><li>✕ Table Mountain Cableway ticket (if applicable)</li></ul></article>
-          </div>
-        </article>
+
+          <div class="price-output"><small>Table Mountain group hike total</small><strong id="table-price">R1600</strong><span id="table-note">For 1 person · R1600 pp · Platteklip Gorge</span></div>
+          <div class="pricing-helper-box">This is a group hike booking price. Larger groups benefit from discounted per-person rates.</div>
+          <ul class="good-to-know"><li>• Transport is available on request within Cape Town city centre and surrounds.</li><li>• Return transport: R200 pp. One-way: R100 pp.</li><li>• Transport is subject to availability and confirmed separately.</li></ul>
+          <div class="pricing-actions"><a class="btn btn-primary" id="table-book-link" href="https://pay.yoco.com/r/2Dzdxp" target="_blank" rel="noreferrer">Book now</a></div>
+        </div>
+
+        <div class="info-wrap">
+          <article class="info-chip"><h4>What’s included</h4><ul class="compact-list"><li>✓ Qualified local hiking guide</li><li>✓ Safety briefing and route management</li><li>✓ First aid and emergency preparedness</li><li>✓ Photos and videos</li><li>✓ Local stories</li></ul></article>
+          <article class="info-chip"><h4>Not included</h4><ul class="compact-list"><li>✕ Transport (available on request)</li><li>✕ Snacks and water</li><li>✕ Table Mountain Cableway ticket (if applicable)</li><li>✕ Entrance fees (if applicable)</li></ul></article>
+        </div>
+      </article>
+    </div>
+
+    <div id="lions-private" class="pricing-detail-panel direct-pricing-panel">
+      <div class="pricing-panel-head">
+        <span class="pricing-section-label private-label">Lion’s Head · Private hike</span>
+        <h4>Lion’s Head Private Hike Pricing</h4>
+        <p>Book a private Lion’s Head experience with a guide reserved exclusively for your booking.</p>
       </div>
+      <article class="pricing-card private-pricing-card private-direct-card">
+        <div class="pricing-block">
+          <h5>Private Lion’s Head Hike</h5>
+          <div class="select-grid">
+            <div class="select-card"><label for="private-experience">Preferred experience</label><select id="private-experience" class="dark-select"><option>Lion’s Head sunrise</option><option>Lion’s Head sunset</option><option>Lion’s Head summit</option><option>Table Mountain - India Venster</option><option>Table Mountain - Platteklip Gorge</option><option>Custom route</option></select></div>
+            <div class="select-card"><label for="private-group-size">Group size</label><select id="private-group-size" class="dark-select"><option value="1">1 person</option><option value="2">2 people</option><option value="3">3 people</option><option value="4">4 people</option><option value="5">5 people</option><option value="6">6 people</option><option value="7">7 people</option><option value="8">8 people</option></select></div>
+            <div class="select-card"><label>Preferred date</label><input class="dark-input" type="date" /></div>
+            <div class="select-card"><label>Transport interest</label><select class="dark-select"><option>No transport needed</option><option>Interested in return transport</option><option>Interested in one-way transport</option></select></div>
+          </div>
+          <div class="price-output"><small>Private hike total</small><strong id="private-price">R1750</strong><span id="private-note">For 1 person · R1750 pp · Lion’s Head sunrise</span></div>
+          <div class="pricing-helper-box">This is a private hike booking price. Your guide is reserved exclusively for your booking.</div>
+          <div class="pricing-actions"><a class="btn btn-primary" id="private-book-link" href="https://pay.yoco.com/r/2be5d5" target="_blank" rel="noreferrer">Book now</a></div>
+        </div>
+        <div class="info-wrap">
+          <article class="info-chip"><h4>What’s included</h4><ul class="compact-list"><li>✓ Exclusive qualified local hiking guide</li><li>✓ Safety briefing and route management</li><li>✓ First aid and emergency preparedness</li><li>✓ Flexible start time where possible</li><li>✓ Custom pace and route guidance</li><li>✓ Photos, videos and local stories</li></ul></article>
+          <article class="info-chip"><h4>Not included</h4><ul class="compact-list"><li>✕ Transport (available on request)</li><li>✕ Snacks and water</li><li>✕ Entrance fees (if applicable)</li></ul></article>
+        </div>
+      </article>
+    </div>
+
+    <div id="table-private" class="pricing-detail-panel direct-pricing-panel">
+      <div class="pricing-panel-head">
+        <span class="pricing-section-label private-label">Table Mountain · Private hike</span>
+        <h4>Table Mountain Private Hike Pricing</h4>
+        <p>Book a private Table Mountain experience with a guide reserved exclusively for your booking.</p>
+      </div>
+      <article class="pricing-card private-pricing-card">
+        <div class="pricing-block">
+          <h5>Private Table Mountain Hike</h5>
+          <p>Use the selector below and choose either Table Mountain - India Venster or Table Mountain - Platteklip Gorge.</p>
+          <div class="select-grid">
+            <div class="select-card"><label>Preferred experience</label><select class="dark-select private-experience-mirror"><option>Table Mountain - India Venster</option><option>Table Mountain - Platteklip Gorge</option><option>Lion’s Head sunrise</option><option>Lion’s Head sunset</option><option>Lion’s Head summit</option><option>Custom route</option></select></div>
+            <div class="select-card"><label>Group size</label><select class="dark-select private-group-mirror"><option value="1">1 person</option><option value="2">2 people</option><option value="3">3 people</option><option value="4">4 people</option><option value="5">5 people</option><option value="6">6 people</option><option value="7">7 people</option><option value="8">8 people</option></select></div>
+            <div class="select-card"><label>Preferred date</label><input class="dark-input" type="date" /></div>
+            <div class="select-card"><label>Transport interest</label><select class="dark-select"><option>No transport needed</option><option>Interested in return transport</option><option>Interested in one-way transport</option></select></div>
+          </div>
+          <div class="price-output"><small>Private hike total</small><strong id="table-private-price">R1750</strong><span id="table-private-note">For 1 person · R1750 pp · Table Mountain - India Venster</span></div>
+          <div class="pricing-helper-box">This is a private hike booking price. Your guide is reserved exclusively for your booking.</div>
+          <div class="pricing-actions"><a class="btn btn-primary" id="table-private-book-link" href="https://pay.yoco.com/r/2be5d5" target="_blank" rel="noreferrer">Book now</a></div>
+        </div>
+        <div class="info-wrap">
+          <article class="info-chip"><h4>What’s included</h4><ul class="compact-list"><li>✓ Exclusive qualified local hiking guide</li><li>✓ Safety briefing and route management</li><li>✓ First aid and emergency preparedness</li><li>✓ Flexible start time where possible</li><li>✓ Custom pace and route guidance</li><li>✓ Photos, videos and local stories</li></ul></article>
+          <article class="info-chip"><h4>Not included</h4><ul class="compact-list"><li>✕ Transport (available on request)</li><li>✕ Snacks and water</li><li>✕ Table Mountain Cableway ticket (if applicable)</li><li>✕ Entrance fees (if applicable)</li></ul></article>
+        </div>
+      </article>
+    </div>
+
+    <div class="custom-hike-cta">
+      <span class="eyebrow">Looking for something different?</span>
+      <h4>Book a custom hike or outdoor experience</h4>
+      <p>Tell us what kind of route, pace or adventure you have in mind and we’ll help recommend a suitable option.</p>
+      <a class="btn btn-light" href="contact.html#enquiry-form">Send a custom enquiry</a>
     </div>
   </div>
 </section>

@@ -52,3 +52,43 @@ document.querySelectorAll('[data-open-panel]').forEach((link) => {
     }, 120);
   });
 });
+
+
+// Direct pricing panels from experience buttons
+const directPricingPanels = Array.from(document.querySelectorAll('.direct-pricing-panel'));
+
+function openDirectPricing(panelId) {
+  directPricingPanels.forEach((panel) => panel.classList.remove('active'));
+  const panel = document.getElementById(panelId);
+  if (panel) {
+    panel.classList.add('active');
+    setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+  }
+}
+
+document.querySelectorAll('[data-open-pricing]').forEach((button) => {
+  button.addEventListener('click', () => {
+    openDirectPricing(button.getAttribute('data-open-pricing'));
+  });
+});
+
+// Table private pricing mirror
+const tablePrivateGroup = document.querySelector('.private-group-mirror');
+const tablePrivateExperience = document.querySelector('.private-experience-mirror');
+const tablePrivatePrice = document.getElementById('table-private-price');
+const tablePrivateNote = document.getElementById('table-private-note');
+const tablePrivateBook = document.getElementById('table-private-book-link');
+
+function updateTablePrivateMirror() {
+  if (!tablePrivateGroup || !tablePrivatePrice || !tablePrivateNote || !tablePrivateBook || typeof privatePrices === 'undefined') return;
+  const selected = privatePrices[tablePrivateGroup.value];
+  const groupText = tablePrivateGroup.options[tablePrivateGroup.selectedIndex].text;
+  const expText = tablePrivateExperience ? tablePrivateExperience.options[tablePrivateExperience.selectedIndex].text : 'Table Mountain - India Venster';
+  tablePrivatePrice.textContent = selected.total;
+  tablePrivateNote.textContent = `For ${groupText.toLowerCase()} · ${selected.pp} · ${expText}`;
+  tablePrivateBook.href = selected.link;
+}
+
+tablePrivateGroup?.addEventListener('change', updateTablePrivateMirror);
+tablePrivateExperience?.addEventListener('change', updateTablePrivateMirror);
+updateTablePrivateMirror();
