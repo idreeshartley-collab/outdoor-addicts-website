@@ -1,0 +1,20 @@
+Outdoor Addicts website GTM update
+
+Files updated:
+- All HTML pages now include Google Tag Manager GTM-52H78PLW.
+- Homepage buttons changed from “Book your group hike” to “Join a group”.
+- Custom enquiry button now uses primary gold styling.
+- Removed the review subtitle “Real guest feedback presented in a clean format.”
+- Added Google review call-to-action using https://g.page/r/CfgQo28KMZRuEAE/review.
+- Added dataLayer events in script.js for enquiry forms, WhatsApp clicks, email clicks, phone clicks, Yoco clicks, waiver clicks, and Google review clicks.
+- Added basic social sharing/Open Graph tags to HTML pages.
+
+Important note on automatic Google reviews:
+A fully automatic Google reviews feed cannot be safely built into a static website using only HTML/CSS/JS without either a paid third-party widget or a backend/API setup. The review section is prepared with a Google review CTA for now.
+
+Deployment:
+1. Replace the matching files in your GitHub project.
+2. Put safe-hiking-cape-town.html inside /blog/.
+3. Commit and push using GitHub Desktop.
+4. Wait for Vercel to deploy.
+5. Test https://outdoor-addicts.com in GTM Preview.
