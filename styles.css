@@ -556,8 +556,30 @@ body:not(.home-page) article strong {
 }
 
 
-/* GTM update: clearer custom enquiry and Google review CTA */
-.custom-enquiry-btn { background: var(--accent) !important; color: #111 !important; border-color: transparent !important; }
-.google-review-cta { margin-top: 26px; display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; padding: 22px; border-radius: 24px; background: linear-gradient(135deg,#fff8e9,#fff); color: #111; box-shadow: var(--shadow-md); }
-.google-review-cta p { margin: 0; color: var(--muted); line-height: 1.7; max-width: 720px; }
-@media(max-width:720px){ .google-review-cta .btn { width:100%; } }
+
+/* Google reviews widget */
+.google-reviews-widget {
+  margin-top: 26px;
+  background: #ffffff;
+  border-radius: 28px;
+  box-shadow: var(--shadow-md);
+  padding: 18px;
+  overflow: hidden;
+}
+
+.review-actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 720px) {
+  .google-reviews-widget {
+    border-radius: 22px;
+    padding: 12px;
+  }
+
+  .review-actions .btn {
+    width: 100%;
+  }
+}

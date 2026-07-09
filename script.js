@@ -1,6 +1,6 @@
 document.getElementById('year')?.append(new Date().getFullYear());
 const menuToggle=document.querySelector('.menu-toggle'),nav=document.querySelector('.nav');menuToggle?.addEventListener('click',()=>nav?.classList.toggle('open'));
-const form=document.getElementById('enquiry-form'),successMessage=document.getElementById('success-message');form?.addEventListener('submit',async e=>{e.preventDefault();const data=new FormData(form);const response=await fetch(form.action,{method:'POST',body:data,headers:{Accept:'application/json'}});if(response.ok){window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'enquiry_form_submit'});form.reset();if(successMessage)successMessage.style.display='block'}else alert('Something went wrong while sending your enquiry. Please try again.')});
+const form=document.getElementById('enquiry-form'),successMessage=document.getElementById('success-message');form?.addEventListener('submit',async e=>{e.preventDefault();const data=new FormData(form);const response=await fetch(form.action,{method:'POST',body:data,headers:{Accept:'application/json'}});if(response.ok){form.reset();if(successMessage)successMessage.style.display='block'}else alert('Something went wrong while sending your enquiry. Please try again.')});
 const lionsPrices={"1":{total:"R1400",pp:"R1400 pp",link:"https://pay.yoco.com/r/4ZWxZL"},"2":{total:"R2400",pp:"R1200 pp",link:"https://pay.yoco.com/r/me0PEp"},"3":{total:"R3150",pp:"R1050 pp",link:"https://pay.yoco.com/r/73NaQR"},"4":{total:"R4200",pp:"R1050 pp",link:"https://pay.yoco.com/r/2Qx6p9"},"5":{total:"R4750",pp:"R950 pp",link:"https://pay.yoco.com/r/7vZrYl"},"6":{total:"R5700",pp:"R950 pp",link:"https://pay.yoco.com/r/2wgDYj"},"7":{total:"R6650",pp:"R950 pp",link:"https://pay.yoco.com/r/2be5E0"},"8":{total:"R7200",pp:"R900 pp",link:"https://pay.yoco.com/r/4Gn51A"}};
 const tablePrices={"1":{total:"R1600",pp:"R1600 pp",link:"https://pay.yoco.com/r/2Dzdxp"},"2":{total:"R2800",pp:"R1400 pp",link:"https://pay.yoco.com/r/mR5MRJ"},"3":{total:"R3750",pp:"R1250 pp",link:"https://pay.yoco.com/r/me0PEv"},"4":{total:"R5000",pp:"R1250 pp",link:"https://pay.yoco.com/r/mO1k3L"},"5":{total:"R5750",pp:"R1150 pp",link:"https://pay.yoco.com/r/2BGLYG"},"6":{total:"R6900",pp:"R1150 pp",link:"https://pay.yoco.com/r/7vZrYO"},"7":{total:"R8050",pp:"R1150 pp",link:"https://pay.yoco.com/r/7y6EYp"},"8":{total:"R8400",pp:"R1050 pp",link:"https://pay.yoco.com/r/2wgDoM"}};
 const privatePrices={"1":{total:"R1750",pp:"R1750 pp",link:"https://pay.yoco.com/r/2be5d5"},"2":{total:"R3500",pp:"R1750 pp",link:"https://pay.yoco.com/r/2DzdJq"},"3":{total:"R4500",pp:"R1500 pp",link:"https://pay.yoco.com/r/mzxNVn"},"4":{total:"R6000",pp:"R1500 pp",link:"https://pay.yoco.com/r/4nJQYd"},"5":{total:"R7000",pp:"R1400 pp",link:"https://pay.yoco.com/r/mMEl5W"},"6":{total:"R8400",pp:"R1400 pp",link:"https://pay.yoco.com/r/mdO5Xg"},"7":{total:"R9800",pp:"R1400 pp",link:"https://pay.yoco.com/r/2LXkpW"},"8":{total:"R10800",pp:"R1350 pp",link:"https://pay.yoco.com/r/7Xl8KK"}};
@@ -92,24 +92,3 @@ function updateTablePrivateMirror() {
 tablePrivateGroup?.addEventListener('change', updateTablePrivateMirror);
 tablePrivateExperience?.addEventListener('change', updateTablePrivateMirror);
 updateTablePrivateMirror();
-
-
-// Outdoor Addicts analytics events for Google Tag Manager
-window.dataLayer = window.dataLayer || [];
-function oaTrackClick(eventName, details = {}) {
-  window.dataLayer.push({ event: eventName, ...details });
-}
-
-document.addEventListener('click', (event) => {
-  const link = event.target.closest('a');
-  if (!link) return;
-  const href = link.getAttribute('href') || '';
-  const label = (link.textContent || '').trim();
-
-  if (href.includes('wa.me/')) oaTrackClick('whatsapp_click', { link_text: label, link_url: href });
-  if (href.startsWith('mailto:')) oaTrackClick('email_click', { link_text: label, link_url: href });
-  if (href.startsWith('tel:')) oaTrackClick('phone_click', { link_text: label, link_url: href });
-  if (href.includes('pay.yoco.com')) oaTrackClick('yoco_payment_click', { link_text: label, link_url: href });
-  if (href.includes('forms.gle')) oaTrackClick('waiver_form_click', { link_text: label, link_url: href });
-  if (href.includes('/review')) oaTrackClick('google_review_click', { link_text: label, link_url: href });
-});
