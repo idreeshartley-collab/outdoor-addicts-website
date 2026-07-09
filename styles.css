@@ -735,3 +735,56 @@ body:not(.home-page) article strong {
     font-size: 0.82rem !important;
   }
 }
+
+
+/* v10 - Improve readability on light orange section */
+.popular-experiences .section-label,
+.popular-experiences h2,
+.popular-experiences p,
+.booking-options .section-label,
+.booking-options h2,
+.booking-options p{
+    color:#111 !important;
+}
+
+
+
+/* v11 - Premium warm cream refinement */
+.home-page main > section:nth-of-type(n+3) {
+  background: #fff8f0 !important;
+  color: #111111 !important;
+}
+
+.premium-experiences {
+  background: linear-gradient(180deg, #fffaf4 0%, #fff6ec 100%) !important;
+}
+
+.simplified-pricing {
+  background: linear-gradient(180deg, #111111 0%, #171717 100%) !important;
+}
+
+.custom-hike-cta {
+  background: linear-gradient(135deg, #fffaf4 0%, #fff6ec 100%) !important;
+}
+
+.google-reviews-widget {
+  background: #ffffff !important;
+}
+
+.premium-experiences .section-head .eyebrow,
+.premium-experiences .section-head h3,
+.premium-experiences .section-head p,
+.simplified-pricing .section-head .eyebrow,
+.simplified-pricing .section-head h3,
+.simplified-pricing .section-head p {
+  color: #111111 !important;
+}
+
+.simplified-pricing .section-head .eyebrow {
+  color: #f4d38b !important;
+}
+
+.simplified-pricing .section-head h3,
+.simplified-pricing .section-head p {
+  color: #ffffff !important;
+}
