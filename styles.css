@@ -254,3 +254,127 @@ label{display:block;margin-bottom:8px;font-size:.92rem;font-weight:650}
   .premium-experience-banner,.premium-experience-content{min-height:620px}
   .premium-experience-content{padding:24px}
 }
+
+
+/* v17 - Hero/Why Choose Us overlay and pricing label contrast fix */
+
+/* Hero section: keep text clearly over the image */
+body.home-page .hero-bg {
+  min-height: 86vh !important;
+  background-image: url("home-hero.jpg") !important;
+  background-position: center center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+body.home-page .hero-overlay {
+  position: absolute !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  background: linear-gradient(180deg, rgba(0,0,0,0.22), rgba(0,0,0,0.66)) !important;
+}
+
+body.home-page .hero-content {
+  position: relative !important;
+  z-index: 2 !important;
+  color: #ffffff !important;
+  padding: 120px 0 96px !important;
+}
+
+body.home-page .hero-content .eyebrow {
+  color: #f4d38b !important;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.35);
+}
+
+body.home-page .hero-content h2,
+body.home-page .hero-content p,
+body.home-page .hero-content .mini-card {
+  color: #ffffff !important;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.38);
+}
+
+/* Why Choose Us section: keep overlay image but make text readable and cards clean */
+body.home-page main > section:nth-of-type(2) {
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.62), rgba(0,0,0,0.66)),
+    url("home-hero.jpg") center center / cover fixed no-repeat !important;
+  color: #ffffff !important;
+  position: relative !important;
+}
+
+body.home-page main > section:nth-of-type(2) .section-head .eyebrow {
+  color: #f4d38b !important;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.35);
+}
+
+body.home-page main > section:nth-of-type(2) .section-head h3,
+body.home-page main > section:nth-of-type(2) .section-head p {
+  color: #ffffff !important;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.38);
+}
+
+body.home-page main > section:nth-of-type(2) .card {
+  background: rgba(255,255,255,0.94) !important;
+  color: #111111 !important;
+  border-color: rgba(255,255,255,0.55) !important;
+}
+
+body.home-page main > section:nth-of-type(2) .card h4 {
+  color: #111111 !important;
+  text-shadow: none !important;
+}
+
+body.home-page main > section:nth-of-type(2) .card p {
+  color: #55524d !important;
+  text-shadow: none !important;
+}
+
+/* Darken pricing pill labels such as Table Mountain · Group Hike */
+body.home-page section#pricing .pricing-section-label,
+body.home-page section#pricing .pricing-section-label.group-label,
+body.home-page section#pricing .pricing-section-label.private-label {
+  background: #fff4da !important;
+  color: #6f4700 !important;
+  border: 1px solid rgba(138,93,0,0.38) !important;
+  text-shadow: none !important;
+}
+
+/* Keep Popular Experiences and Booking Options headings dark on cream background */
+body.home-page section#experiences .section-head .eyebrow,
+body.home-page section#pricing .section-head .eyebrow {
+  color: #8a5d00 !important;
+  text-shadow: none !important;
+}
+
+body.home-page section#experiences .section-head h3,
+body.home-page section#pricing .section-head h3 {
+  color: #111111 !important;
+  text-shadow: none !important;
+}
+
+body.home-page section#experiences .section-head p,
+body.home-page section#pricing .section-head p {
+  color: #333333 !important;
+  text-shadow: none !important;
+}
+
+@media (max-width: 820px) {
+  body.home-page .hero-bg {
+    min-height: 82vh !important;
+    background-position: left center !important;
+  }
+
+  body.home-page .hero-content {
+    padding: 96px 0 70px !important;
+  }
+
+  body.home-page main > section:nth-of-type(2) {
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.64), rgba(0,0,0,0.70)),
+      url("home-hero.jpg") left center / cover scroll no-repeat !important;
+  }
+}
