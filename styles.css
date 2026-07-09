@@ -790,52 +790,84 @@ body:not(.home-page) article strong {
 }
 
 
-/* v15 - Exact final heading colour override for cream sections */
+/* v16 - Pricing readability and booking process section */
 
-/* Popular Experiences heading area */
-body.home-page main section#experiences.premium-experiences .section-head span.eyebrow {
-  color: #8a5d00 !important;
-  text-shadow: none !important;
-}
-
-body.home-page main section#experiences.premium-experiences .section-head h3 {
-  color: #111111 !important;
-  text-shadow: none !important;
-}
-
-body.home-page main section#experiences.premium-experiences .section-head p {
-  color: #333333 !important;
-  text-shadow: none !important;
-}
-
-/* Booking Options heading area */
-body.home-page main section#pricing.simplified-pricing .section-head span.eyebrow {
-  color: #8a5d00 !important;
-  text-shadow: none !important;
-}
-
-body.home-page main section#pricing.simplified-pricing .section-head h3 {
-  color: #111111 !important;
-  text-shadow: none !important;
-}
-
-body.home-page main section#pricing.simplified-pricing .section-head p {
-  color: #333333 !important;
-  text-shadow: none !important;
-}
-
-/* Keep the pricing section cream/light, but keep pricing cards dark/readable */
+/* Keep pricing section cream, but make all top-level pricing wording readable */
 body.home-page main section#pricing.simplified-pricing {
   background: #fff8f0 !important;
   color: #111111 !important;
 }
 
-body.home-page main section#pricing.simplified-pricing .pricing-panel-head,
-body.home-page main section#pricing.simplified-pricing .pricing-card,
-body.home-page main section#pricing.simplified-pricing .pricing-block,
+body.home-page main section#pricing.simplified-pricing > .container > .section-head .eyebrow {
+  color: #8a5d00 !important;
+  text-shadow: none !important;
+}
+
+body.home-page main section#pricing.simplified-pricing > .container > .section-head h3,
+body.home-page main section#pricing.simplified-pricing > .container > .section-head p {
+  color: #111111 !important;
+  text-shadow: none !important;
+}
+
+/* Pricing panels: dark text on light card background */
+body.home-page main section#pricing.simplified-pricing .pricing-panel-head {
+  background: rgba(255,255,255,0.82) !important;
+  border: 1px solid rgba(217,154,22,0.24) !important;
+  color: #111111 !important;
+}
+
+body.home-page main section#pricing.simplified-pricing .pricing-panel-head h4,
+body.home-page main section#pricing.simplified-pricing .pricing-panel-head p {
+  color: #111111 !important;
+  text-shadow: none !important;
+}
+
+body.home-page main section#pricing.simplified-pricing .pricing-card {
+  background: rgba(255,255,255,0.88) !important;
+  border: 1px solid rgba(217,154,22,0.24) !important;
+  color: #111111 !important;
+}
+
+body.home-page main section#pricing.simplified-pricing .pricing-block {
+  background: rgba(255,255,255,0.78) !important;
+  border: 1px solid rgba(0,0,0,0.06) !important;
+  color: #111111 !important;
+}
+
+body.home-page main section#pricing.simplified-pricing .pricing-block h5,
+body.home-page main section#pricing.simplified-pricing .pricing-block p,
+body.home-page main section#pricing.simplified-pricing .select-card label,
+body.home-page main section#pricing.simplified-pricing .good-to-know,
+body.home-page main section#pricing.simplified-pricing .good-to-know li,
+body.home-page main section#pricing.simplified-pricing .price-output small,
+body.home-page main section#pricing.simplified-pricing .price-output strong,
+body.home-page main section#pricing.simplified-pricing .price-output span {
+  color: #111111 !important;
+  text-shadow: none !important;
+}
+
+body.home-page main section#pricing.simplified-pricing .select-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+}
+
+body.home-page main section#pricing.simplified-pricing .dark-select,
+body.home-page main section#pricing.simplified-pricing .dark-input {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border: 1px solid rgba(0,0,0,0.14) !important;
+  color-scheme: light !important;
+}
+
 body.home-page main section#pricing.simplified-pricing .price-output,
-body.home-page main section#pricing.simplified-pricing .good-to-know {
-  color: #ffffff !important;
+body.home-page main section#pricing.simplified-pricing .pricing-helper-box {
+  background: #fff4da !important;
+  border: 1px solid rgba(217,154,22,0.25) !important;
+  color: #111111 !important;
+}
+
+body.home-page main section#pricing.simplified-pricing .pricing-helper-box {
+  color: #3f3a31 !important;
 }
 
 body.home-page main section#pricing.simplified-pricing .info-chip,
@@ -843,4 +875,44 @@ body.home-page main section#pricing.simplified-pricing .info-chip h4,
 body.home-page main section#pricing.simplified-pricing .compact-list,
 body.home-page main section#pricing.simplified-pricing .compact-list li {
   color: #111111 !important;
+}
+
+body.home-page main section#pricing.simplified-pricing .pricing-section-label.group-label,
+body.home-page main section#pricing.simplified-pricing .pricing-section-label.private-label {
+  background: rgba(217,154,22,0.16) !important;
+  color: #8a5d00 !important;
+  border: 1px solid rgba(217,154,22,0.34) !important;
+}
+
+/* How booking works */
+.how-booking-works {
+  background: #fff8f0 !important;
+  color: #111111 !important;
+}
+
+.how-booking-works .section-head .eyebrow {
+  color: #8a5d00 !important;
+}
+
+.how-booking-works .section-head h3,
+.how-booking-works .section-head p {
+  color: #111111 !important;
+}
+
+.booking-process-grid .process-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(217,154,22,0.18);
+}
+
+.step-number {
+  display: inline-flex;
+  width: 46px;
+  height: 46px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #fff4da;
+  color: #8a5d00;
+  font-weight: 900;
+  margin-bottom: 18px;
 }
