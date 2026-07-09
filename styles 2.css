@@ -788,3 +788,32 @@ body:not(.home-page) article strong {
 .simplified-pricing .section-head p {
   color: #ffffff !important;
 }
+
+
+/* v12 - Final readability fix for cream background headings */
+.home-page .premium-experiences .section-head .eyebrow,
+.home-page .premium-experiences .section-head h3,
+.home-page .premium-experiences .section-head p,
+.home-page #pricing.simplified-pricing .section-head .eyebrow,
+.home-page #pricing.simplified-pricing .section-head h3,
+.home-page #pricing.simplified-pricing .section-head p {
+  color: #111111 !important;
+  text-shadow: none !important;
+}
+
+.home-page #pricing.simplified-pricing {
+  background: #fff8f0 !important;
+  color: #111111 !important;
+}
+
+.home-page #pricing.simplified-pricing .pricing-panel-head,
+.home-page #pricing.simplified-pricing .pricing-card,
+.home-page #pricing.simplified-pricing .pricing-block {
+  color: #ffffff;
+}
+
+.home-page #pricing.simplified-pricing .info-chip,
+.home-page #pricing.simplified-pricing .info-chip h4,
+.home-page #pricing.simplified-pricing .compact-list {
+  color: #111111 !important;
+}
