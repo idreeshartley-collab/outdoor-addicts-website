@@ -689,3 +689,49 @@ body:not(.home-page) article strong {
     padding: 12px;
   }
 }
+
+
+
+/* V8: warm logo-theme experience background and footer refinement */
+.home-page main > section:nth-of-type(n+3) {
+  background: #fff4da !important;
+  color: #111111 !important;
+}
+
+.premium-experiences {
+  background: linear-gradient(180deg, #fff8e9 0%, #fff1cf 100%) !important;
+}
+
+.premium-experiences .section-head .eyebrow {
+  color: #8a5d00 !important;
+  font-size: 0.92rem !important;
+  letter-spacing: 0.22em;
+}
+
+.premium-experiences .section-head h3 {
+  color: #111111 !important;
+  font-size: clamp(2.4rem, 4.8vw, 3.7rem) !important;
+}
+
+.premium-experiences .section-head p {
+  color: #3f3a31 !important;
+  font-size: 1.08rem;
+}
+
+.section-head .eyebrow {
+  font-size: 0.84rem;
+}
+
+.oa-footer .oa-footer-grid > div:nth-child(3) a[href="waiver.html"] {
+  display: none !important;
+}
+
+@media (max-width: 720px) {
+  .premium-experiences .section-head h3 {
+    font-size: clamp(2.05rem, 9vw, 2.8rem) !important;
+  }
+
+  .premium-experiences .section-head .eyebrow {
+    font-size: 0.82rem !important;
+  }
+}
