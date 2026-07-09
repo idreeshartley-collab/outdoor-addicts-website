@@ -478,3 +478,183 @@ body.home-page section {
       url("home-hero.jpg") left center / cover no-repeat !important;
   }
 }
+
+
+/* v19 - Restored fixed hero image with scrolling text overlay */
+
+/* Homepage fixed image backdrop for first two sections */
+body.home-page {
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.66)),
+    url("home-hero.jpg") center center / cover fixed no-repeat,
+    #fff8f0 !important;
+}
+
+/* Hero section text scrolls over fixed background */
+body.home-page .hero-bg {
+  min-height: calc(100vh - 116px) !important;
+  background: transparent !important;
+  display: flex !important;
+  align-items: center !important;
+  position: relative !important;
+  overflow: visible !important;
+}
+
+body.home-page .hero-overlay {
+  position: relative !important;
+  inset: auto !important;
+  width: 100% !important;
+  min-height: calc(100vh - 116px) !important;
+  display: flex !important;
+  align-items: center !important;
+  background: transparent !important;
+}
+
+body.home-page .hero-content {
+  position: relative !important;
+  z-index: 2 !important;
+  color: #ffffff !important;
+  padding: 96px 0 110px !important;
+}
+
+body.home-page .hero-content .eyebrow {
+  color: #f4d38b !important;
+}
+
+body.home-page .hero-content h2,
+body.home-page .hero-content p,
+body.home-page .hero-content .mini-card {
+  color: #ffffff !important;
+  text-shadow: 0 3px 20px rgba(0,0,0,0.48) !important;
+}
+
+/* Why Choose Us section also scrolls over the same fixed image */
+body.home-page main > section:nth-of-type(2) {
+  background: transparent !important;
+  color: #ffffff !important;
+  position: relative !important;
+}
+
+body.home-page main > section:nth-of-type(2)::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(0,0,0,0.42) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+body.home-page main > section:nth-of-type(2) .container {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+body.home-page main > section:nth-of-type(2) .section-head .eyebrow {
+  color: #f4d38b !important;
+  text-shadow: 0 3px 20px rgba(0,0,0,0.48) !important;
+}
+
+body.home-page main > section:nth-of-type(2) .section-head h3,
+body.home-page main > section:nth-of-type(2) .section-head p {
+  color: #ffffff !important;
+  text-shadow: 0 3px 20px rgba(0,0,0,0.48) !important;
+}
+
+/* Cards stay readable */
+body.home-page main > section:nth-of-type(2) .card {
+  background: rgba(255,255,255,0.94) !important;
+  color: #111111 !important;
+  border-color: rgba(255,255,255,0.58) !important;
+}
+
+body.home-page main > section:nth-of-type(2) .card h4 {
+  color: #111111 !important;
+  text-shadow: none !important;
+}
+
+body.home-page main > section:nth-of-type(2) .card p {
+  color: #55524d !important;
+  text-shadow: none !important;
+}
+
+/* From Popular Experiences onwards, return to clean cream background */
+body.home-page section#experiences,
+body.home-page section#pricing,
+body.home-page section.how-booking-works,
+body.home-page section.band:not(:nth-of-type(2)) {
+  background: linear-gradient(180deg, #fffaf4 0%, #fff6ec 100%) !important;
+  color: #111111 !important;
+}
+
+body.home-page section#experiences::before,
+body.home-page section#pricing::before,
+body.home-page section.how-booking-works::before {
+  display: none !important;
+  content: none !important;
+}
+
+/* Keep headings readable on cream sections */
+body.home-page section#experiences .section-head .eyebrow,
+body.home-page section#pricing .section-head .eyebrow,
+body.home-page section.how-booking-works .section-head .eyebrow {
+  color: #8a5d00 !important;
+  text-shadow: none !important;
+}
+
+body.home-page section#experiences .section-head h3,
+body.home-page section#pricing .section-head h3,
+body.home-page section.how-booking-works .section-head h3 {
+  color: #111111 !important;
+  text-shadow: none !important;
+}
+
+body.home-page section#experiences .section-head p,
+body.home-page section#pricing .section-head p,
+body.home-page section.how-booking-works .section-head p {
+  color: #333333 !important;
+  text-shadow: none !important;
+}
+
+/* Mobile: fixed backgrounds can be unreliable on some mobile browsers, so use fixed pseudo background */
+@media (max-width: 820px) {
+  body.home-page {
+    background: #fff8f0 !important;
+    position: relative !important;
+  }
+
+  body.home-page::before {
+    content: "" !important;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: -2 !important;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.24), rgba(0,0,0,0.70)),
+      url("home-hero.jpg") left center / cover no-repeat !important;
+    pointer-events: none !important;
+  }
+
+  body.home-page .hero-bg,
+  body.home-page .hero-overlay {
+    min-height: calc(92vh - 92px) !important;
+    background: transparent !important;
+  }
+
+  body.home-page .hero-content {
+    padding: 78px 0 82px !important;
+  }
+
+  body.home-page main > section:nth-of-type(2) {
+    background: transparent !important;
+  }
+
+  body.home-page main > section:nth-of-type(2)::before {
+    background: rgba(0,0,0,0.46) !important;
+  }
+
+  body.home-page section#experiences,
+  body.home-page section#pricing,
+  body.home-page section.how-booking-works,
+  body.home-page section.band:not(:nth-of-type(2)) {
+    background: linear-gradient(180deg, #fffaf4 0%, #fff6ec 100%) !important;
+  }
+}
