@@ -790,7 +790,57 @@ body:not(.home-page) article strong {
 }
 
 
-/* v14 - Popular Experiences heading visibility */
-.home-page .premium-experiences .section-head .eyebrow{color:#8a5a00!important;}
-.home-page .premium-experiences .section-head h3{color:#1a1a1a!important;}
-.home-page .premium-experiences .section-head p{color:#333333!important;}
+/* v15 - Exact final heading colour override for cream sections */
+
+/* Popular Experiences heading area */
+body.home-page main section#experiences.premium-experiences .section-head span.eyebrow {
+  color: #8a5d00 !important;
+  text-shadow: none !important;
+}
+
+body.home-page main section#experiences.premium-experiences .section-head h3 {
+  color: #111111 !important;
+  text-shadow: none !important;
+}
+
+body.home-page main section#experiences.premium-experiences .section-head p {
+  color: #333333 !important;
+  text-shadow: none !important;
+}
+
+/* Booking Options heading area */
+body.home-page main section#pricing.simplified-pricing .section-head span.eyebrow {
+  color: #8a5d00 !important;
+  text-shadow: none !important;
+}
+
+body.home-page main section#pricing.simplified-pricing .section-head h3 {
+  color: #111111 !important;
+  text-shadow: none !important;
+}
+
+body.home-page main section#pricing.simplified-pricing .section-head p {
+  color: #333333 !important;
+  text-shadow: none !important;
+}
+
+/* Keep the pricing section cream/light, but keep pricing cards dark/readable */
+body.home-page main section#pricing.simplified-pricing {
+  background: #fff8f0 !important;
+  color: #111111 !important;
+}
+
+body.home-page main section#pricing.simplified-pricing .pricing-panel-head,
+body.home-page main section#pricing.simplified-pricing .pricing-card,
+body.home-page main section#pricing.simplified-pricing .pricing-block,
+body.home-page main section#pricing.simplified-pricing .price-output,
+body.home-page main section#pricing.simplified-pricing .good-to-know {
+  color: #ffffff !important;
+}
+
+body.home-page main section#pricing.simplified-pricing .info-chip,
+body.home-page main section#pricing.simplified-pricing .info-chip h4,
+body.home-page main section#pricing.simplified-pricing .compact-list,
+body.home-page main section#pricing.simplified-pricing .compact-list li {
+  color: #111111 !important;
+}
