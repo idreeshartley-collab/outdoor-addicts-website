@@ -1,20 +1,27 @@
-Outdoor Addicts website GTM update
+Outdoor Addicts – Branded Review Page Update
 
-Files updated:
-- All HTML pages now include Google Tag Manager GTM-52H78PLW.
-- Homepage buttons changed from “Book your group hike” to “Join a group”.
-- Custom enquiry button now uses primary gold styling.
-- Removed the review subtitle “Real guest feedback presented in a clean format.”
-- Added Google review call-to-action using https://g.page/r/CfgQo28KMZRuEAE/review.
-- Added dataLayer events in script.js for enquiry forms, WhatsApp clicks, email clicks, phone clicks, Yoco clicks, waiver clicks, and Google review clicks.
-- Added basic social sharing/Open Graph tags to HTML pages.
+Changed files to replace in the website root:
+- index.html
+- styles.css
+- script.js
 
-Important note on automatic Google reviews:
-A fully automatic Google reviews feed cannot be safely built into a static website using only HTML/CSS/JS without either a paid third-party widget or a backend/API setup. The review section is prepared with a Google review CTA for now.
+New files to add to the website root:
+- reviews.html
+
+Logo included only for preview/reference:
+- outdoor-addicts-logo.png
+You do not need to replace the existing logo if the same file is already in the project.
 
 Deployment:
-1. Replace the matching files in your GitHub project.
-2. Put safe-hiking-cape-town.html inside /blog/.
+1. Copy the three changed files into the GitHub website root and replace the existing versions.
+2. Add reviews.html to the same root folder.
 3. Commit and push using GitHub Desktop.
 4. Wait for Vercel to deploy.
-5. Test https://outdoor-addicts.com in GTM Preview.
+5. Test https://outdoor-addicts.com/reviews.html on desktop and mobile.
+6. Test the Copy my review button, Google link and Tripadvisor widget.
+
+Notes:
+- The homepage footer now includes “⭐ Leave us a Review” under Useful links.
+- Google review URL: https://g.page/r/CfgQo28KMZRuEBM/review
+- Tripadvisor widget location ID: 26021514
+- The page tracks review_page_view, review_copied and review_platform_click events in dataLayer.

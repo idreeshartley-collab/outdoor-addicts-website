@@ -658,3 +658,44 @@ body.home-page section.how-booking-works .section-head p {
     background: linear-gradient(180deg, #fffaf4 0%, #fff6ec 100%) !important;
   }
 }
+
+/* Branded review page */
+.review-page-main{background:linear-gradient(180deg,#fff8f0 0%,#fff6ec 100%)}
+.review-hero{padding:86px 0 46px;text-align:center;background:linear-gradient(135deg,#fff8e9,#fff)}
+.review-hero .eyebrow{margin-bottom:12px}
+.review-hero h2{margin:0 auto;max-width:900px;font-size:clamp(2.5rem,5vw,4.6rem);line-height:.98;letter-spacing:-.055em}
+.review-hero p{max-width:760px;margin:22px auto 0;color:var(--muted);font-size:1.05rem;line-height:1.8}
+.review-flow{padding-top:42px}
+.review-shell{max-width:900px;margin:0 auto;display:grid;gap:24px}
+.review-card{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:30px;box-shadow:var(--shadow-lg);padding:32px}
+.review-step{display:inline-flex;align-items:center;justify-content:center;min-width:42px;height:42px;padding:0 14px;border-radius:999px;background:var(--accent-soft);color:var(--accent-dark);font-weight:900;margin-bottom:16px}
+.review-card h3{margin:0;font-size:clamp(1.55rem,3vw,2.15rem);letter-spacing:-.035em}
+.review-card p{color:var(--muted);line-height:1.75}
+.review-choice-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px}
+.review-choice{position:relative}
+.review-choice input{position:absolute;opacity:0;pointer-events:none}
+.review-choice label{height:100%;margin:0;padding:17px 18px;border:1px solid rgba(0,0,0,.10);border-radius:18px;background:#fff;cursor:pointer;font-weight:750;transition:.2s}
+.review-choice input:checked+label{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 3px rgba(217,154,22,.12)}
+.review-draft{min-height:210px;margin-top:14px}
+.review-prompts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px}
+.review-prompt{padding:12px 14px;border-radius:15px;background:#fff8e9;color:#4b4337;font-size:.9rem;line-height:1.5}
+.review-actions-main{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+.copy-status{min-height:24px;margin-top:12px;font-weight:800;color:#286b35}
+.review-platforms{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.platform-card{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:28px;box-shadow:var(--shadow-md);padding:28px;text-align:center}
+.platform-card h3{margin:10px 0 8px;font-size:1.55rem}
+.platform-card p{margin:0 0 20px;color:var(--muted);line-height:1.65}
+.google-review-btn{width:100%;background:var(--accent);color:#111}
+.tripadvisor-widget-wrap{min-height:150px;display:flex;align-items:center;justify-content:center;padding:10px;background:#fff;border-radius:18px;border:1px solid rgba(0,0,0,.06);overflow:hidden}
+.review-tip{padding:20px 22px;border-radius:22px;background:#111;color:#fff;text-align:center;line-height:1.7}
+.review-thanks{text-align:center;padding:18px 0 0}
+.review-thanks strong{display:block;font-size:1.2rem;margin-bottom:6px}
+.footer-review-link{color:#f4d38b!important;font-weight:800}
+.footer-review-link:hover{color:#fff!important}
+
+@media(max-width:720px){
+  .review-hero{padding:64px 0 34px}
+  .review-card,.platform-card{padding:22px}
+  .review-choice-grid,.review-prompts,.review-platforms{grid-template-columns:1fr}
+  .review-actions-main .btn{width:100%}
+}

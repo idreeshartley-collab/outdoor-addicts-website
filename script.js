@@ -92,3 +92,54 @@ function updateTablePrivateMirror() {
 tablePrivateGroup?.addEventListener('change', updateTablePrivateMirror);
 tablePrivateExperience?.addEventListener('change', updateTablePrivateMirror);
 updateTablePrivateMirror();
+
+// Review page interactions and analytics
+const reviewDraft = document.getElementById('review-draft');
+const copyReviewButton = document.getElementById('copy-review');
+const copyReviewStatus = document.getElementById('copy-review-status');
+const platformLinks = document.querySelectorAll('[data-review-platform]');
+
+function trackReviewEvent(eventName, details = {}) {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: eventName, ...details });
+}
+
+if (document.body.classList.contains('review-page')) {
+  trackReviewEvent('review_page_view');
+}
+
+copyReviewButton?.addEventListener('click', async () => {
+  const reviewText = reviewDraft?.value.trim() || '';
+  if (!reviewText) {
+    copyReviewStatus.textContent = 'Please write your review first.';
+    reviewDraft?.focus();
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(reviewText);
+    copyReviewButton.textContent = '✓ Review copied';
+    copyReviewStatus.textContent = 'Great! Open Google or Tripadvisor and paste your review.';
+    trackReviewEvent('review_copied', {
+      review_length: reviewText.length,
+      experience: document.querySelector('input[name="review-experience"]:checked')?.value || 'not_selected'
+    });
+  } catch (error) {
+    reviewDraft.select();
+    document.execCommand('copy');
+    copyReviewButton.textContent = '✓ Review copied';
+    copyReviewStatus.textContent = 'Great! Open Google or Tripadvisor and paste your review.';
+    trackReviewEvent('review_copied_fallback');
+  }
+});
+
+reviewDraft?.addEventListener('input', () => {
+  if (copyReviewButton?.textContent.includes('copied')) copyReviewButton.textContent = 'Copy my review';
+  if (copyReviewStatus) copyReviewStatus.textContent = '';
+});
+
+platformLinks.forEach((link) => {
+  link.addEventListener('click', () => {
+    trackReviewEvent('review_platform_click', { platform: link.dataset.reviewPlatform });
+  });
+});
