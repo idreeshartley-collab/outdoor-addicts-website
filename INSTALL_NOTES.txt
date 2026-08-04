@@ -25,3 +25,9 @@ Notes:
 - Google review URL: https://g.page/r/CfgQo28KMZRuEBM/review
 - Tripadvisor widget location ID: 26021514
 - The page tracks review_page_view, review_copied and review_platform_click events in dataLayer.
+
+Latest refinements:
+- Removed the experience-selection helper subtext.
+- Made guide wording suitable for any Outdoor Addicts guide.
+- Removed the pace prompt.
+- Added separate Tripadvisor choices for Lion’s Head and all other Outdoor Addicts hikes.

@@ -687,6 +687,13 @@ body.home-page section.how-booking-works .section-head p {
 .platform-card p{margin:0 0 20px;color:var(--muted);line-height:1.65}
 .google-review-btn{width:100%;background:var(--accent);color:#111}
 .tripadvisor-widget-wrap{min-height:150px;display:flex;align-items:center;justify-content:center;padding:10px;background:#fff;border-radius:18px;border:1px solid rgba(0,0,0,.06);overflow:hidden}
+.ta-review-selector{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
+.ta-review-option{border:1px solid rgba(0,0,0,.12);background:#fff;border-radius:16px;padding:13px 14px;font:inherit;font-weight:800;cursor:pointer;transition:.2s}
+.ta-review-option:hover{border-color:var(--accent)}
+.ta-review-option.active{background:var(--accent-soft);border-color:var(--accent);box-shadow:0 0 0 3px rgba(217,154,22,.12)}
+.ta-widget-panel{display:none}
+.ta-widget-panel.active{display:block}
+.ta-widget-label{margin:0 0 12px!important;font-size:.9rem;color:var(--muted)}
 .review-tip{padding:20px 22px;border-radius:22px;background:#111;color:#fff;text-align:center;line-height:1.7}
 .review-thanks{text-align:center;padding:18px 0 0}
 .review-thanks strong{display:block;font-size:1.2rem;margin-bottom:6px}
@@ -696,6 +703,6 @@ body.home-page section.how-booking-works .section-head p {
 @media(max-width:720px){
   .review-hero{padding:64px 0 34px}
   .review-card,.platform-card{padding:22px}
-  .review-choice-grid,.review-prompts,.review-platforms{grid-template-columns:1fr}
+  .review-choice-grid,.review-prompts,.review-platforms,.ta-review-selector{grid-template-columns:1fr}
   .review-actions-main .btn{width:100%}
 }
