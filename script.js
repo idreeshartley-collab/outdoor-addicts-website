@@ -143,22 +143,3 @@ platformLinks.forEach((link) => {
     trackReviewEvent('review_platform_click', { platform: link.dataset.reviewPlatform });
   });
 });
-
-
-const taReviewOptions = Array.from(document.querySelectorAll('.ta-review-option'));
-const taWidgetPanels = Array.from(document.querySelectorAll('.ta-widget-panel'));
-
-taReviewOptions.forEach((option) => {
-  option.addEventListener('click', () => {
-    const targetId = option.dataset.taTarget;
-
-    taReviewOptions.forEach((button) => {
-      const isActive = button === option;
-      button.classList.toggle('active', isActive);
-      button.setAttribute('aria-pressed', String(isActive));
-    });
-
-    taWidgetPanels.forEach((panel) => panel.classList.toggle('active', panel.id === targetId));
-    trackReviewEvent('tripadvisor_review_type_selected', { review_type: targetId });
-  });
-});
