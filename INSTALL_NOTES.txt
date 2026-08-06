@@ -1,33 +1,26 @@
-Outdoor Addicts – Branded Review Page Update
+Outdoor Addicts – Phase 1 Analytics Update
 
-Changed files to replace in the website root:
+Replace:
 - index.html
-- styles.css
 - script.js
 
-New files to add to the website root:
-- reviews.html
+Changes:
+- Installed GTM container GTM-52H78PLW
+- Removed direct GA4 code for G-1NL316PZVH to prevent duplicate page views
+- Added dataLayer tracking for booking selections, pricing views, selector changes,
+  Yoco checkout clicks, WhatsApp, email, phone, reviews and successful enquiries
 
-Logo included only for preview/reference:
-- outdoor-addicts-logo.png
-You do not need to replace the existing logo if the same file is already in the project.
+Before deploying:
+1. In GTM create a Google tag using G-1NL316PZVH
+2. Trigger: Initialization - All Pages
+3. Create one GA4 Event tag using Event Name = {{Event}}
+4. Trigger that event tag on these custom events:
+   ^(oa_|begin_checkout|generate_lead)
+5. Preview, then Submit and Publish
+6. Replace index.html and script.js
+7. Commit and push through GitHub Desktop
+8. Test with Tag Assistant and GA4 Realtime
 
-Deployment:
-1. Copy the three changed files into the GitHub website root and replace the existing versions.
-2. Add reviews.html to the same root folder.
-3. Commit and push using GitHub Desktop.
-4. Wait for Vercel to deploy.
-5. Test https://outdoor-addicts.com/reviews.html on desktop and mobile.
-6. Test the Copy my review button, Google link and Tripadvisor widget.
-
-Notes:
-- The homepage footer now includes “⭐ Leave us a Review” under Useful links.
-- Google review URL: https://g.page/r/CfgQo28KMZRuEBM/review
-- Tripadvisor widget location ID: 26021514
-- The page tracks review_page_view, review_copied and review_platform_click events in dataLayer.
-
-Latest refinements:
-- Removed the experience-selection helper subtext.
-- Made guide wording suitable for any Outdoor Addicts guide.
-- Removed the pace prompt.
-- Added separate Tripadvisor choices for Lion’s Head and all other Outdoor Addicts hikes.
+Important:
+GTM is installed only in the uploaded index.html. Send the remaining current HTML files
+or a current full-site ZIP to install GTM on every page.

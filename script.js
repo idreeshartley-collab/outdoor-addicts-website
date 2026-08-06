@@ -1,6 +1,6 @@
 document.getElementById('year')?.append(new Date().getFullYear());
 const menuToggle=document.querySelector('.menu-toggle'),nav=document.querySelector('.nav');menuToggle?.addEventListener('click',()=>nav?.classList.toggle('open'));
-const form=document.getElementById('enquiry-form'),successMessage=document.getElementById('success-message');form?.addEventListener('submit',async e=>{e.preventDefault();const data=new FormData(form);const response=await fetch(form.action,{method:'POST',body:data,headers:{Accept:'application/json'}});if(response.ok){form.reset();if(successMessage)successMessage.style.display='block'}else alert('Something went wrong while sending your enquiry. Please try again.')});
+const form=document.getElementById('enquiry-form'),successMessage=document.getElementById('success-message');form?.addEventListener('submit',async e=>{e.preventDefault();const data=new FormData(form);const response=await fetch(form.action,{method:'POST',body:data,headers:{Accept:'application/json'}});if(response.ok){form.reset();if(successMessage)successMessage.style.display='block';form.dispatchEvent(new CustomEvent('oa:form-success'))}else alert('Something went wrong while sending your enquiry. Please try again.')});
 const lionsPrices={"1":{total:"R1400",pp:"R1400 pp",link:"https://pay.yoco.com/r/4ZWxZL"},"2":{total:"R2400",pp:"R1200 pp",link:"https://pay.yoco.com/r/me0PEp"},"3":{total:"R3150",pp:"R1050 pp",link:"https://pay.yoco.com/r/73NaQR"},"4":{total:"R4200",pp:"R1050 pp",link:"https://pay.yoco.com/r/2Qx6p9"},"5":{total:"R4750",pp:"R950 pp",link:"https://pay.yoco.com/r/7vZrYl"},"6":{total:"R5700",pp:"R950 pp",link:"https://pay.yoco.com/r/2wgDYj"},"7":{total:"R6650",pp:"R950 pp",link:"https://pay.yoco.com/r/2be5E0"},"8":{total:"R7200",pp:"R900 pp",link:"https://pay.yoco.com/r/4Gn51A"}};
 const tablePrices={"1":{total:"R1600",pp:"R1600 pp",link:"https://pay.yoco.com/r/2Dzdxp"},"2":{total:"R2800",pp:"R1400 pp",link:"https://pay.yoco.com/r/mR5MRJ"},"3":{total:"R3750",pp:"R1250 pp",link:"https://pay.yoco.com/r/me0PEv"},"4":{total:"R5000",pp:"R1250 pp",link:"https://pay.yoco.com/r/mO1k3L"},"5":{total:"R5750",pp:"R1150 pp",link:"https://pay.yoco.com/r/2BGLYG"},"6":{total:"R6900",pp:"R1150 pp",link:"https://pay.yoco.com/r/7vZrYO"},"7":{total:"R8050",pp:"R1150 pp",link:"https://pay.yoco.com/r/7y6EYp"},"8":{total:"R8400",pp:"R1050 pp",link:"https://pay.yoco.com/r/2wgDoM"}};
 const privatePrices={"1":{total:"R1750",pp:"R1750 pp",link:"https://pay.yoco.com/r/2be5d5"},"2":{total:"R3500",pp:"R1750 pp",link:"https://pay.yoco.com/r/2DzdJq"},"3":{total:"R4500",pp:"R1500 pp",link:"https://pay.yoco.com/r/mzxNVn"},"4":{total:"R6000",pp:"R1500 pp",link:"https://pay.yoco.com/r/4nJQYd"},"5":{total:"R7000",pp:"R1400 pp",link:"https://pay.yoco.com/r/mMEl5W"},"6":{total:"R8400",pp:"R1400 pp",link:"https://pay.yoco.com/r/mdO5Xg"},"7":{total:"R9800",pp:"R1400 pp",link:"https://pay.yoco.com/r/2LXkpW"},"8":{total:"R10800",pp:"R1350 pp",link:"https://pay.yoco.com/r/7Xl8KK"}};
@@ -142,4 +142,113 @@ platformLinks.forEach((link) => {
   link.addEventListener('click', () => {
     trackReviewEvent('review_platform_click', { platform: link.dataset.reviewPlatform });
   });
+});
+
+// Outdoor Addicts Phase 1 analytics events
+window.dataLayer = window.dataLayer || [];
+
+function trackOAEvent(eventName, parameters = {}) {
+  window.dataLayer.push({
+    event: eventName,
+    page_path: window.location.pathname,
+    page_title: document.title,
+    ...parameters
+  });
+}
+
+function normaliseText(value = '') {
+  return value.trim().replace(/\s+/g, ' ').toLowerCase().replace(/[’']/g, '');
+}
+
+trackOAEvent('oa_homepage_view');
+
+document.querySelectorAll('[data-open-pricing]').forEach((button) => {
+  button.addEventListener('click', () => {
+    const panelId = button.getAttribute('data-open-pricing') || '';
+    const [experience, bookingType] = panelId.split('-');
+    trackOAEvent('oa_booking_option_selected', {
+      experience,
+      booking_type: bookingType,
+      button_text: button.textContent.trim()
+    });
+  });
+});
+
+const pricingSectionForTracking = document.getElementById('pricing');
+if (pricingSectionForTracking && 'IntersectionObserver' in window) {
+  let pricingViewed = false;
+  const pricingObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && !pricingViewed) {
+        pricingViewed = true;
+        trackOAEvent('oa_pricing_viewed');
+        pricingObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.35 });
+  pricingObserver.observe(pricingSectionForTracking);
+}
+
+document.querySelectorAll('#pricing select, #pricing input[type="date"]').forEach((field) => {
+  field.addEventListener('change', () => {
+    const panel = field.closest('.direct-pricing-panel');
+    const fieldLabel = field.closest('.select-card')?.querySelector('label')?.textContent || field.id || 'selection';
+    trackOAEvent('oa_pricing_selection_changed', {
+      pricing_panel: panel?.id || 'unknown',
+      selection_type: normaliseText(fieldLabel).replace(/\s+/g, '_'),
+      selection_value: field.value
+    });
+  });
+});
+
+document.querySelectorAll('a[href*="pay.yoco.com"]').forEach((link) => {
+  link.addEventListener('click', () => {
+    const panel = link.closest('.direct-pricing-panel');
+    trackOAEvent('begin_checkout', {
+      booking_option: panel?.id || 'unknown',
+      displayed_price: panel?.querySelector('.price-output strong')?.textContent.trim() || '',
+      booking_summary: panel?.querySelector('.price-output span')?.textContent.trim() || '',
+      payment_provider: 'yoco'
+    });
+  });
+});
+
+document.querySelectorAll('a[href*="contact.html#enquiry-form"]').forEach((link) => {
+  link.addEventListener('click', () => {
+    trackOAEvent('oa_custom_enquiry_clicked', { link_text: link.textContent.trim() });
+  });
+});
+
+document.querySelectorAll('a[href^="https://wa.me/"], a[href^="http://wa.me/"]').forEach((link) => {
+  link.addEventListener('click', () => {
+    trackOAEvent('oa_whatsapp_clicked', {
+      link_location: link.classList.contains('whatsapp-float') ? 'floating_button' : 'page_link'
+    });
+  });
+});
+
+document.querySelectorAll('a[href^="mailto:"]').forEach((link) => {
+  link.addEventListener('click', () => {
+    trackOAEvent('oa_email_clicked', {
+      email_address: link.getAttribute('href').replace('mailto:', '')
+    });
+  });
+});
+
+document.querySelectorAll('a[href^="tel:"]').forEach((link) => {
+  link.addEventListener('click', () => {
+    trackOAEvent('oa_phone_clicked', {
+      phone_number: link.getAttribute('href').replace('tel:', '')
+    });
+  });
+});
+
+document.querySelectorAll('a[href*="reviews.html"]').forEach((link) => {
+  link.addEventListener('click', () => {
+    trackOAEvent('oa_review_page_clicked', { link_text: link.textContent.trim() });
+  });
+});
+
+document.getElementById('enquiry-form')?.addEventListener('oa:form-success', () => {
+  trackOAEvent('generate_lead', { lead_type: 'website_enquiry' });
 });
