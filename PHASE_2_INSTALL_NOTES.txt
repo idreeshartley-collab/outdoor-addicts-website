@@ -1,0 +1,66 @@
+Outdoor Addicts – Phase 2 Conversion Tracking
+
+Replace these changed files:
+- index.html
+- script.js
+- about.html
+- contact.html
+- news.html
+- reviews.html
+- privacy-policy.html
+- refund-policy.html
+- scheduled-hikes.html
+- waiver.html
+- blog/safe-hiking-cape-town.html
+
+No CSS changes are included.
+
+What changed:
+- GTM container GTM-52H78PLW installed across all supplied HTML pages.
+- Direct GA4 gtag.js code removed from all supplied pages to prevent duplicate page views.
+- Homepage booking and Yoco tracking retained.
+- Added sitewide events for:
+  oa_page_viewed
+  oa_homepage_view
+  oa_booking_option_selected
+  oa_pricing_viewed
+  oa_pricing_selection_changed
+  begin_checkout
+  oa_custom_enquiry_clicked
+  oa_whatsapp_clicked
+  oa_scheduled_hike_whatsapp_clicked
+  oa_email_clicked
+  oa_phone_clicked
+  generate_lead
+  oa_review_page_clicked
+  oa_review_page_view
+  oa_review_copied
+  oa_review_copied_fallback
+  oa_review_platform_click
+  oa_google_review_clicked
+  oa_tripadvisor_clicked
+  oa_waiver_viewed
+  oa_waiver_clicked
+  oa_refund_policy_clicked
+  oa_scheduled_hikes_viewed
+  oa_blog_article_viewed
+  oa_article_read_depth
+  oa_social_link_clicked
+
+Your existing GTM trigger:
+  ^(oa_|begin_checkout|generate_lead)
+
+already captures all of these events. No additional GTM trigger is required.
+
+Recommended GA4 key events:
+- generate_lead
+- begin_checkout
+- oa_whatsapp_clicked
+- oa_scheduled_hike_whatsapp_clicked
+
+After deployment:
+1. Replace only the files listed above, preserving the blog folder location.
+2. Commit and push through GitHub Desktop.
+3. Wait for Vercel deployment.
+4. Open GA4 Realtime and perform test actions.
+5. Allow up to 24 hours for events to populate in standard GA4 event reports.

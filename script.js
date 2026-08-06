@@ -101,7 +101,13 @@ const platformLinks = document.querySelectorAll('[data-review-platform]');
 
 function trackReviewEvent(eventName, details = {}) {
   window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ event: eventName, ...details });
+  const finalName = eventName.startsWith('oa_') ? eventName : `oa_${eventName}`;
+  window.dataLayer.push({
+    event: finalName,
+    page_path: window.location.pathname,
+    page_title: document.title,
+    ...details
+  });
 }
 
 if (document.body.classList.contains('review-page')) {
@@ -144,7 +150,7 @@ platformLinks.forEach((link) => {
   });
 });
 
-// Outdoor Addicts Phase 1 analytics events
+// Outdoor Addicts Phase 2 conversion and engagement tracking
 window.dataLayer = window.dataLayer || [];
 
 function trackOAEvent(eventName, parameters = {}) {
@@ -152,6 +158,7 @@ function trackOAEvent(eventName, parameters = {}) {
     event: eventName,
     page_path: window.location.pathname,
     page_title: document.title,
+    page_location: window.location.href,
     ...parameters
   });
 }
@@ -160,12 +167,56 @@ function normaliseText(value = '') {
   return value.trim().replace(/\s+/g, ' ').toLowerCase().replace(/[’']/g, '');
 }
 
-trackOAEvent('oa_homepage_view');
+function inferLinkLocation(link) {
+  if (link.classList.contains('whatsapp-float')) return 'floating_button';
+  if (link.closest('.oa-footer, .site-footer')) return 'footer';
+  if (link.closest('.site-header, header')) return 'header';
+  if (link.closest('#pricing')) return 'pricing';
+  if (link.closest('.review-page-main')) return 'review_page';
+  if (link.closest('.contact-shell')) return 'contact_page';
+  return 'page_content';
+}
 
+// Page-level context
+trackOAEvent('oa_page_viewed', {
+  page_type:
+    document.body.classList.contains('home-page') ? 'homepage' :
+    document.body.classList.contains('review-page') ? 'review_page' :
+    window.location.pathname.includes('/blog/') ? 'blog_article' :
+    window.location.pathname.includes('waiver') ? 'waiver' :
+    window.location.pathname.includes('scheduled-hikes') ? 'scheduled_hikes' :
+    window.location.pathname.includes('contact') ? 'contact' :
+    window.location.pathname.includes('about') ? 'about' :
+    window.location.pathname.includes('news') ? 'news' :
+    window.location.pathname.includes('privacy-policy') ? 'privacy_policy' :
+    window.location.pathname.includes('refund-policy') ? 'refund_policy' :
+    'standard_page'
+});
+
+if (document.body.classList.contains('home-page')) {
+  trackOAEvent('oa_homepage_view');
+}
+
+if (window.location.pathname.includes('waiver')) {
+  trackOAEvent('oa_waiver_viewed');
+}
+
+if (window.location.pathname.includes('scheduled-hikes')) {
+  trackOAEvent('oa_scheduled_hikes_viewed');
+}
+
+if (window.location.pathname.includes('/blog/')) {
+  trackOAEvent('oa_blog_article_viewed', {
+    article_slug: window.location.pathname.split('/').pop()?.replace('.html', '') || ''
+  });
+}
+
+// Experience and booking selections
 document.querySelectorAll('[data-open-pricing]').forEach((button) => {
   button.addEventListener('click', () => {
     const panelId = button.getAttribute('data-open-pricing') || '';
     const [experience, bookingType] = panelId.split('-');
+
     trackOAEvent('oa_booking_option_selected', {
       experience,
       booking_type: bookingType,
@@ -174,6 +225,7 @@ document.querySelectorAll('[data-open-pricing]').forEach((button) => {
   });
 });
 
+// Pricing section visibility
 const pricingSectionForTracking = document.getElementById('pricing');
 if (pricingSectionForTracking && 'IntersectionObserver' in window) {
   let pricingViewed = false;
@@ -186,13 +238,19 @@ if (pricingSectionForTracking && 'IntersectionObserver' in window) {
       }
     });
   }, { threshold: 0.35 });
+
   pricingObserver.observe(pricingSectionForTracking);
 }
 
+// Pricing selector activity
 document.querySelectorAll('#pricing select, #pricing input[type="date"]').forEach((field) => {
   field.addEventListener('change', () => {
     const panel = field.closest('.direct-pricing-panel');
-    const fieldLabel = field.closest('.select-card')?.querySelector('label')?.textContent || field.id || 'selection';
+    const fieldLabel =
+      field.closest('.select-card')?.querySelector('label')?.textContent ||
+      field.id ||
+      'selection';
+
     trackOAEvent('oa_pricing_selection_changed', {
       pricing_panel: panel?.id || 'unknown',
       selection_type: normaliseText(fieldLabel).replace(/\s+/g, '_'),
@@ -201,36 +259,55 @@ document.querySelectorAll('#pricing select, #pricing input[type="date"]').forEac
   });
 });
 
+// Yoco checkout clicks
 document.querySelectorAll('a[href*="pay.yoco.com"]').forEach((link) => {
   link.addEventListener('click', () => {
     const panel = link.closest('.direct-pricing-panel');
+    const priceText = panel?.querySelector('.price-output strong')?.textContent.trim() || '';
+    const value = Number(priceText.replace(/[^\d.]/g, '')) || undefined;
+
     trackOAEvent('begin_checkout', {
       booking_option: panel?.id || 'unknown',
-      displayed_price: panel?.querySelector('.price-output strong')?.textContent.trim() || '',
+      displayed_price: priceText,
+      value,
+      currency: 'ZAR',
       booking_summary: panel?.querySelector('.price-output span')?.textContent.trim() || '',
       payment_provider: 'yoco'
     });
   });
 });
 
+// Contact and enquiry actions
 document.querySelectorAll('a[href*="contact.html#enquiry-form"]').forEach((link) => {
   link.addEventListener('click', () => {
-    trackOAEvent('oa_custom_enquiry_clicked', { link_text: link.textContent.trim() });
+    trackOAEvent('oa_custom_enquiry_clicked', {
+      link_text: link.textContent.trim(),
+      link_location: inferLinkLocation(link)
+    });
   });
 });
 
 document.querySelectorAll('a[href^="https://wa.me/"], a[href^="http://wa.me/"]').forEach((link) => {
   link.addEventListener('click', () => {
-    trackOAEvent('oa_whatsapp_clicked', {
-      link_location: link.classList.contains('whatsapp-float') ? 'floating_button' : 'page_link'
-    });
+    const href = link.getAttribute('href') || '';
+    const scheduledIntent = /scheduled|upcoming|group%20hikes/i.test(href);
+
+    trackOAEvent(
+      scheduledIntent ? 'oa_scheduled_hike_whatsapp_clicked' : 'oa_whatsapp_clicked',
+      {
+        link_location: inferLinkLocation(link),
+        link_text: link.textContent.trim(),
+        destination: 'whatsapp'
+      }
+    );
   });
 });
 
 document.querySelectorAll('a[href^="mailto:"]').forEach((link) => {
   link.addEventListener('click', () => {
     trackOAEvent('oa_email_clicked', {
-      email_address: link.getAttribute('href').replace('mailto:', '')
+      email_address: link.getAttribute('href').replace('mailto:', ''),
+      link_location: inferLinkLocation(link)
     });
   });
 });
@@ -238,17 +315,100 @@ document.querySelectorAll('a[href^="mailto:"]').forEach((link) => {
 document.querySelectorAll('a[href^="tel:"]').forEach((link) => {
   link.addEventListener('click', () => {
     trackOAEvent('oa_phone_clicked', {
-      phone_number: link.getAttribute('href').replace('tel:', '')
+      phone_number: link.getAttribute('href').replace('tel:', ''),
+      link_location: inferLinkLocation(link)
     });
   });
 });
 
-document.querySelectorAll('a[href*="reviews.html"]').forEach((link) => {
-  link.addEventListener('click', () => {
-    trackOAEvent('oa_review_page_clicked', { link_text: link.textContent.trim() });
+document.getElementById('enquiry-form')?.addEventListener('oa:form-success', () => {
+  trackOAEvent('generate_lead', {
+    lead_type: 'website_enquiry',
+    form_id: 'enquiry-form'
   });
 });
 
-document.getElementById('enquiry-form')?.addEventListener('oa:form-success', () => {
-  trackOAEvent('generate_lead', { lead_type: 'website_enquiry' });
+// Review funnel
+document.querySelectorAll('a[href*="reviews.html"]').forEach((link) => {
+  link.addEventListener('click', () => {
+    trackOAEvent('oa_review_page_clicked', {
+      link_text: link.textContent.trim(),
+      link_location: inferLinkLocation(link)
+    });
+  });
+});
+
+document.querySelectorAll('a[href*="google.com"][href*="review"], a[href*="g.page"]').forEach((link) => {
+  link.addEventListener('click', () => {
+    trackOAEvent('oa_google_review_clicked', {
+      link_location: inferLinkLocation(link)
+    });
+  });
+});
+
+document.querySelectorAll('a[href*="tripadvisor"]').forEach((link) => {
+  link.addEventListener('click', () => {
+    trackOAEvent('oa_tripadvisor_clicked', {
+      link_location: inferLinkLocation(link)
+    });
+  });
+});
+
+// Waiver and policy interest
+document.querySelectorAll('a[href$="waiver.html"], a[href*="/waiver.html"]').forEach((link) => {
+  link.addEventListener('click', () => {
+    trackOAEvent('oa_waiver_clicked', {
+      link_location: inferLinkLocation(link)
+    });
+  });
+});
+
+document.querySelectorAll('a[href*="refund-policy.html"]').forEach((link) => {
+  link.addEventListener('click', () => {
+    trackOAEvent('oa_refund_policy_clicked', {
+      link_location: inferLinkLocation(link)
+    });
+  });
+});
+
+// Blog engagement: 50% and 90% read depth
+if (window.location.pathname.includes('/blog/')) {
+  const firedDepths = new Set();
+
+  const trackReadDepth = () => {
+    const doc = document.documentElement;
+    const scrollable = doc.scrollHeight - window.innerHeight;
+    if (scrollable <= 0) return;
+
+    const percent = Math.round((window.scrollY / scrollable) * 100);
+
+    [50, 90].forEach((depth) => {
+      if (percent >= depth && !firedDepths.has(depth)) {
+        firedDepths.add(depth);
+        trackOAEvent('oa_article_read_depth', {
+          article_slug: window.location.pathname.split('/').pop()?.replace('.html', '') || '',
+          percent_scrolled: depth
+        });
+      }
+    });
+  };
+
+  window.addEventListener('scroll', trackReadDepth, { passive: true });
+}
+
+// Generic outbound social links
+document.querySelectorAll(
+  'a[href*="instagram.com"], a[href*="facebook.com"]'
+).forEach((link) => {
+  link.addEventListener('click', () => {
+    const platform =
+      link.href.includes('instagram.com') ? 'instagram' :
+      link.href.includes('facebook.com') ? 'facebook' :
+      'social';
+
+    trackOAEvent('oa_social_link_clicked', {
+      platform,
+      link_location: inferLinkLocation(link)
+    });
+  });
 });
