@@ -700,3 +700,141 @@ body.home-page section.how-booking-works .section-head p {
   .review-choice-grid,.review-prompts,.review-platforms{grid-template-columns:1fr}
   .review-actions-main .btn{width:100%}
 }
+
+/* Outdoor Addicts Journal articles */
+.article-hero{
+  min-height:72vh;
+  background-position:center;
+  background-size:cover;
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+.article-hero-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.74));
+}
+.article-hero-content{
+  position:relative;
+  z-index:2;
+  color:#fff;
+  padding:120px 0 82px;
+}
+.article-hero-content .eyebrow{color:#f4d38b}
+.article-hero-content h1{
+  font-size:clamp(2.7rem,6vw,5rem);
+  line-height:1;
+  margin:16px 0 0;
+  max-width:940px;
+  letter-spacing:-.05em;
+  color:#fff;
+}
+.article-hero-content p{
+  margin:24px 0 0;
+  max-width:760px;
+  line-height:1.85;
+  font-size:1.08rem;
+  color:rgba(255,255,255,.94);
+}
+.article-section{padding-top:64px}
+.article-container{max-width:940px}
+.article-card{
+  background:#fff;
+  padding:clamp(26px,5vw,48px);
+  border-radius:30px;
+  box-shadow:var(--shadow-md);
+  line-height:1.9;
+  font-size:1.04rem;
+}
+.article-card h2{
+  margin:48px 0 14px;
+  font-size:clamp(1.7rem,3vw,2.35rem);
+  line-height:1.15;
+  letter-spacing:-.035em;
+}
+.article-card p{margin:0 0 20px}
+.article-byline{
+  color:var(--muted);
+  font-size:.93rem;
+  margin-bottom:28px;
+  padding-bottom:20px;
+  border-bottom:1px solid rgba(0,0,0,.08);
+}
+.article-figure{margin:34px 0}
+.article-figure img{
+  width:100%;
+  border-radius:22px;
+  box-shadow:var(--shadow-md);
+}
+.article-figure figcaption{
+  margin-top:10px;
+  color:var(--muted);
+  font-size:.86rem;
+  line-height:1.5;
+}
+.article-table-wrap{
+  overflow-x:auto;
+  margin:24px 0 12px;
+  border-radius:20px;
+  border:1px solid rgba(0,0,0,.08);
+}
+.article-comparison{
+  width:100%;
+  border-collapse:collapse;
+  background:#fff;
+}
+.article-comparison th,
+.article-comparison td{
+  padding:15px 16px;
+  text-align:left;
+  border-bottom:1px solid rgba(0,0,0,.07);
+}
+.article-comparison th{
+  background:var(--accent-soft);
+  font-weight:850;
+}
+.article-comparison tr:last-child td{border-bottom:0}
+.article-note{font-size:.88rem;color:var(--muted)}
+.article-related,
+.article-author{
+  margin:36px 0;
+  padding:24px;
+  border-radius:20px;
+  background:var(--accent-soft);
+  border:1px solid rgba(217,154,22,.2);
+}
+.article-related p,
+.article-author p{margin:8px 0 0}
+.article-related a{
+  color:var(--accent-dark);
+  font-weight:800;
+  text-decoration:underline;
+}
+.article-closing{
+  font-size:1.12rem;
+  line-height:1.8;
+  padding:22px 0;
+}
+.article-cta{
+  margin-top:36px;
+  background:linear-gradient(135deg,#fff8e9,#fff);
+  border-radius:30px;
+  padding:36px;
+  box-shadow:var(--shadow-md);
+}
+.article-cta h3{margin:14px 0 0;font-size:2rem}
+.article-cta p{line-height:1.9;color:var(--muted)}
+.article-cta-actions{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-top:24px;
+}
+@media(max-width:700px){
+  .article-hero{min-height:64vh}
+  .article-hero-content{padding:86px 0 58px}
+  .article-card{border-radius:24px}
+  .article-comparison th,
+  .article-comparison td{padding:12px 11px;font-size:.9rem}
+}
