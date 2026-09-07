@@ -1,0 +1,10 @@
+# Local / repository metadata
+.git
+.git/**
+.DS_Store
+**/.DS_Store
+
+# Development notes
+README.txt
+INSTALL_NOTES.txt
+PHASE_2_INSTALL_NOTES.txt
