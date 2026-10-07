@@ -412,3 +412,193 @@ document.querySelectorAll(
     });
   });
 });
+
+// Outdoor Addicts booking capture + identifiable Yoco Payment Page checkout
+// Captures the full booking before payment, emails it via Formspree, then sends
+// the guest to Yoco with the same unique reference used in Yoco's payment email.
+(() => {
+  const PAYMENT_PAGE = 'https://pay.yoco.com/outdoor-addicts';
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mzdkllal';
+  const SUCCESS_URL = 'https://www.outdoor-addicts.com/booking-success.html';
+
+  const bookingLinks = Array.from(document.querySelectorAll(
+    '#lions-book-link, #table-book-link, #private-book-link, #table-private-book-link'
+  ));
+  if (!bookingLinks.length) return;
+
+  function fieldByLabel(panel, labelText) {
+    const cards = Array.from(panel.querySelectorAll('.select-card'));
+    const card = cards.find((item) => (item.querySelector('label')?.textContent || '').trim().toLowerCase().includes(labelText));
+    return card?.querySelector('input, select') || null;
+  }
+
+  function selectedText(field) {
+    if (!field) return '';
+    if (field.tagName === 'SELECT') return field.options[field.selectedIndex]?.text || field.value;
+    return field.value || '';
+  }
+
+  function makeReference(panelId) {
+    const codes = {
+      'lions-group': 'LH-GRP',
+      'table-group': 'TM-GRP',
+      'lions-private': 'LH-PRI',
+      'table-private': 'TM-PRI'
+    };
+    const now = new Date();
+    const stamp = [
+      now.getFullYear().toString().slice(-2),
+      String(now.getMonth() + 1).padStart(2, '0'),
+      String(now.getDate()).padStart(2, '0'),
+      String(now.getHours()).padStart(2, '0'),
+      String(now.getMinutes()).padStart(2, '0'),
+      String(now.getSeconds()).padStart(2, '0')
+    ].join('');
+    const random = Math.random().toString(36).slice(2, 5).toUpperCase();
+    return `OA-${codes[panelId] || 'BOOK'}-${stamp}-${random}`;
+  }
+
+  const modal = document.createElement('div');
+  modal.className = 'booking-modal';
+  modal.setAttribute('aria-hidden', 'true');
+  modal.innerHTML = `
+    <div class="booking-modal-backdrop" data-booking-close></div>
+    <div class="booking-modal-card" role="dialog" aria-modal="true" aria-labelledby="booking-modal-title">
+      <button class="booking-modal-close" type="button" aria-label="Close" data-booking-close>×</button>
+      <span class="eyebrow">Secure your booking</span>
+      <h4 id="booking-modal-title">Guest details</h4>
+      <p class="booking-modal-intro">Enter the lead guest's details. We'll record your booking before sending you to Yoco for secure payment.</p>
+      <div class="booking-modal-summary" id="booking-modal-summary"></div>
+      <form id="booking-capture-form">
+        <div class="booking-modal-grid">
+          <div><label for="booking-first-name">First name</label><input id="booking-first-name" type="text" autocomplete="given-name" required></div>
+          <div><label for="booking-last-name">Last name</label><input id="booking-last-name" type="text" autocomplete="family-name" required></div>
+          <div><label for="booking-email">Email address</label><input id="booking-email" type="email" autocomplete="email" required></div>
+          <div><label for="booking-phone">Phone / WhatsApp</label><input id="booking-phone" type="tel" autocomplete="tel" required></div>
+        </div>
+        <p class="booking-modal-note">Your booking is only confirmed once payment is successfully completed on Yoco.</p>
+        <p class="booking-modal-error" id="booking-modal-error" role="alert"></p>
+        <button class="btn btn-primary booking-continue" type="submit">Continue to secure payment</button>
+      </form>
+    </div>`;
+  document.body.appendChild(modal);
+
+  const form = modal.querySelector('#booking-capture-form');
+  const summaryBox = modal.querySelector('#booking-modal-summary');
+  const errorBox = modal.querySelector('#booking-modal-error');
+  const submitButton = modal.querySelector('.booking-continue');
+  let activeBooking = null;
+
+  function closeModal() {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    activeBooking = null;
+    errorBox.textContent = '';
+  }
+
+  modal.querySelectorAll('[data-booking-close]').forEach((el) => el.addEventListener('click', closeModal));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+
+  bookingLinks.forEach((link) => {
+    // Remove the legacy fixed-link behaviour. Payment URL is generated after details are captured.
+    link.removeAttribute('target');
+    link.removeAttribute('rel');
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      const panel = link.closest('.direct-pricing-panel');
+      if (!panel) return;
+
+      const dateField = fieldByLabel(panel, 'preferred date');
+      if (!dateField?.value) {
+        dateField?.focus();
+        dateField?.reportValidity?.();
+        alert('Please select your preferred hike date before continuing to payment.');
+        return;
+      }
+
+      const priceText = panel.querySelector('.price-output strong')?.textContent.trim() || '';
+      const amount = Number(priceText.replace(/[^\d.]/g, ''));
+      const summary = panel.querySelector('.price-output span')?.textContent.trim() || '';
+      const transport = selectedText(fieldByLabel(panel, 'transport interest'));
+      const reference = makeReference(panel.id);
+
+      activeBooking = {
+        reference,
+        panelId: panel.id,
+        amount,
+        priceText,
+        summary,
+        preferredDate: dateField.value,
+        transport
+      };
+
+      summaryBox.innerHTML = `<strong>${summary}</strong><span>Preferred date: ${dateField.value}</span><span>${transport}</span><span>Total: ${priceText}</span>`;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      setTimeout(() => modal.querySelector('#booking-first-name')?.focus(), 50);
+    }, true);
+  });
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!activeBooking || !form.reportValidity()) return;
+
+    const firstName = modal.querySelector('#booking-first-name').value.trim();
+    const lastName = modal.querySelector('#booking-last-name').value.trim();
+    const email = modal.querySelector('#booking-email').value.trim();
+    const phone = modal.querySelector('#booking-phone').value.trim();
+
+    submitButton.disabled = true;
+    submitButton.textContent = 'Preparing secure payment…';
+    errorBox.textContent = '';
+
+    const payload = new FormData();
+    payload.append('_subject', `NEW WEBSITE BOOKING - ${activeBooking.reference} - PAYMENT PENDING`);
+    payload.append('booking_reference', activeBooking.reference);
+    payload.append('booking_status', 'PAYMENT PENDING - guest sent to Yoco');
+    payload.append('lead_guest', `${firstName} ${lastName}`);
+    payload.append('email', email);
+    payload.append('phone_whatsapp', phone);
+    payload.append('booking_option', activeBooking.panelId);
+    payload.append('booking_summary', activeBooking.summary);
+    payload.append('preferred_date', activeBooking.preferredDate);
+    payload.append('transport_interest', activeBooking.transport);
+    payload.append('booking_total', activeBooking.priceText);
+    payload.append('payment_provider', 'Yoco Payment Page');
+    payload.append('important', 'Match this booking reference with the Yoco successful-payment notification before treating the booking as confirmed.');
+
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        body: payload,
+        headers: { Accept: 'application/json' }
+      });
+      if (!response.ok) throw new Error('Booking notification could not be sent');
+
+      if (typeof trackOAEvent === 'function') {
+        trackOAEvent('oa_booking_details_captured', {
+          booking_reference: activeBooking.reference,
+          booking_option: activeBooking.panelId,
+          value: activeBooking.amount,
+          currency: 'ZAR'
+        });
+      }
+
+      const params = new URLSearchParams({
+        amount: activeBooking.amount.toFixed(2),
+        reference: activeBooking.reference,
+        firstName,
+        lastName,
+        email,
+        redirectOnPaymentSuccess: SUCCESS_URL
+      });
+      window.location.href = `${PAYMENT_PAGE}?${params.toString()}`;
+    } catch (error) {
+      errorBox.textContent = 'We could not prepare your booking for payment. Please try again, or contact us on WhatsApp for assistance.';
+      submitButton.disabled = false;
+      submitButton.textContent = 'Continue to secure payment';
+    }
+  });
+})();
