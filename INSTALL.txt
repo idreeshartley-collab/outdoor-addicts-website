@@ -1,0 +1,14 @@
+Outdoor Addicts — Table Mountain article update
+
+Changed/new files only.
+
+Copy:
+- news.html -> website root
+- sitemap.xml -> website root
+- all .jpg files -> website root
+- blog/india-venster-vs-platteklip-gorge.html -> website /blog/ folder
+
+This update preserves GTM-52H78PLW and uses www.outdoor-addicts.com canonical URLs.
+
+Suggested commit:
+Add India Venster vs Platteklip Gorge guide
