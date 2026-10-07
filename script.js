@@ -522,6 +522,13 @@ document.querySelectorAll(
       const amount = Number(priceText.replace(/[^\d.]/g, ''));
       const summary = panel.querySelector('.price-output span')?.textContent.trim() || '';
       const transport = selectedText(fieldByLabel(panel, 'transport interest'));
+      const groupSizeField = fieldByLabel(panel, 'group size');
+      const groupSize = selectedText(groupSizeField);
+      const experienceField = fieldByLabel(panel, panel.id.includes('private') ? 'preferred experience' : (panel.id === 'table-group' ? 'select route' : 'select option'));
+      const experience = selectedText(experienceField);
+      const bookingType = panel.id.includes('private') ? 'Private hike' : 'Join-a-group';
+      const experienceName = panel.id.startsWith('table-') ? 'Table Mountain' : 'Lion’s Head';
+      const experienceDisplay = experience ? `${experienceName} – ${experience.replace(/^Table Mountain\s*-\s*/i, '')}` : experienceName;
       const reference = makeReference(panel.id);
 
       activeBooking = {
@@ -531,7 +538,10 @@ document.querySelectorAll(
         priceText,
         summary,
         preferredDate: dateField.value,
-        transport
+        transport,
+        groupSize,
+        experienceDisplay,
+        bookingType
       };
 
       summaryBox.innerHTML = `<strong>${summary}</strong><span>Preferred date: ${dateField.value}</span><span>${transport}</span><span>Total: ${priceText}</span>`;
@@ -556,18 +566,32 @@ document.querySelectorAll(
 
     const payload = new FormData();
     payload.append('_subject', `NEW WEBSITE BOOKING - ${activeBooking.reference} - PAYMENT PENDING`);
-    payload.append('booking_reference', activeBooking.reference);
-    payload.append('booking_status', 'PAYMENT PENDING - guest sent to Yoco');
-    payload.append('lead_guest', `${firstName} ${lastName}`);
-    payload.append('email', email);
-    payload.append('phone_whatsapp', phone);
-    payload.append('booking_option', activeBooking.panelId);
-    payload.append('booking_summary', activeBooking.summary);
-    payload.append('preferred_date', activeBooking.preferredDate);
-    payload.append('transport_interest', activeBooking.transport);
-    payload.append('booking_total', activeBooking.priceText);
-    payload.append('payment_provider', 'Yoco Payment Page');
-    payload.append('important', 'Match this booking reference with the Yoco successful-payment notification before treating the booking as confirmed.');
+    const readableDate = (() => {
+      const [year, month, day] = activeBooking.preferredDate.split('-').map(Number);
+      if (!year || !month || !day) return activeBooking.preferredDate;
+      return new Date(year, month - 1, day).toLocaleDateString('en-ZA', {
+        day: 'numeric', month: 'long', year: 'numeric'
+      });
+    })();
+    const transportDisplay =
+      activeBooking.transport === 'Interested in return transport' ? 'Return transport requested' :
+      activeBooking.transport === 'Interested in one-way transport' ? 'One-way transport requested' :
+      'No transport requested';
+
+    // Keep these labels human-readable: Formspree uses them directly in the notification email.
+    payload.append('Status', 'PAYMENT PENDING - guest sent to Yoco');
+    payload.append('Reference', activeBooking.reference);
+    payload.append('Experience', activeBooking.experienceDisplay);
+    payload.append('Booking type', activeBooking.bookingType);
+    payload.append('Guests', activeBooking.groupSize);
+    payload.append('Tour date', readableDate);
+    payload.append('Transport', transportDisplay);
+    payload.append('Amount due', activeBooking.priceText);
+    payload.append('Lead guest', `${firstName} ${lastName}`);
+    payload.append('Email', email);
+    payload.append('Phone / WhatsApp', phone);
+    payload.append('Payment provider', 'Yoco Payment Page');
+    payload.append('Important', 'Match this reference with the Yoco successful-payment notification before treating the booking as confirmed.');
 
     try {
       const response = await fetch(FORMSPREE_ENDPOINT, {
