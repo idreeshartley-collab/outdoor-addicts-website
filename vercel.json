@@ -1,6 +1,11 @@
 {
   "redirects": [
     {
+      "source": "/news.html",
+      "destination": "https://www.outdoor-addicts.com/hiking-guides.html",
+      "permanent": true
+    },
+    {
       "source": "/(.*)",
       "has": [
         {

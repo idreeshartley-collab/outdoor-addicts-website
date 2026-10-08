@@ -630,7 +630,7 @@ document.querySelectorAll(
 
 // OA navigation label: Hiking Guides & FAQs
 document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('a[href="news.html"], a[href="/news.html"]').forEach(function (link) {
-    if (link.textContent.trim() === 'News and Updates') link.textContent = 'Hiking Guides & FAQs';
+  document.querySelectorAll('a[href="hiking-guides.html"], a[href="/hiking-guides.html"]').forEach(function (link) {
+    if (link.textContent.trim() === 'Hiking Guides & FAQs') link.textContent = 'Hiking Guides & FAQs';
   });
 });
