@@ -626,3 +626,11 @@ document.querySelectorAll(
     }
   });
 })();
+
+
+// OA navigation label: Hiking Guides & FAQs
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('a[href="news.html"], a[href="/news.html"]').forEach(function (link) {
+    if (link.textContent.trim() === 'News and Updates') link.textContent = 'Hiking Guides & FAQs';
+  });
+});
