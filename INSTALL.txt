@@ -1,14 +1,17 @@
-Outdoor Addicts — Table Mountain article update
+OUTDOOR ADDICTS — VISUAL FIX
+Replace only these files in your new restructured website folder:
 
-Changed/new files only.
+Root:
+- scheduled-hikes.html
+- bobbejaansrivier-waterfall.html
+- styles.css
 
-Copy:
-- news.html -> website root
-- sitemap.xml -> website root
-- all .jpg files -> website root
-- blog/india-venster-vs-platteklip-gorge.html -> website /blog/ folder
+images folder:
+- bobbejaansrivier-hero.webp
+- bobbejaansrivier-waterfall-detail.webp
+- bobbejaansrivier-waterfall-scale.webp
+- bobbejaansrivier-rock-pool.webp
+- bobbejaansrivier-terrain.webp
 
-This update preserves GTM-52H78PLW and uses www.outdoor-addicts.com canonical URLs.
-
-Suggested commit:
-Add India Venster vs Platteklip Gorge guide
+No other files need to be moved or deleted.
+The Scheduled Hikes hero reuses the existing images/table-mountain-hiking-guide-hero.jpg.
