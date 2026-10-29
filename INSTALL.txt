@@ -1,17 +1,5 @@
-OUTDOOR ADDICTS — VISUAL FIX
-Replace only these files in your new restructured website folder:
+Outdoor Addicts gallery expansion fix
 
-Root:
-- scheduled-hikes.html
-- bobbejaansrivier-waterfall.html
-- styles.css
+Copy these files into the website root, preserving the images/ folder and replacing matching files.
 
-images folder:
-- bobbejaansrivier-hero.webp
-- bobbejaansrivier-waterfall-detail.webp
-- bobbejaansrivier-waterfall-scale.webp
-- bobbejaansrivier-rock-pool.webp
-- bobbejaansrivier-terrain.webp
-
-No other files need to be moved or deleted.
-The Scheduled Hikes hero reuses the existing images/table-mountain-hiking-guide-hero.jpg.
+Changes: expanded galleries where source images could be processed; Lion's Head duplicate image replaced; Tranquility hero sharpened; Valken gallery expanded.
