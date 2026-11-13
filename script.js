@@ -636,42 +636,99 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// Scheduled Adventures calendar + direct booking
-(function(){
-  const cfg=window.OA_SCHEDULED_HIKES;
-  if(!cfg) return;
-  const money=n=>'R'+Number(n).toLocaleString('en-ZA');
-  const prettyDate=s=>new Date(s+'T12:00:00').toLocaleDateString('en-ZA',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
-  const track=(name,params={})=>{ if(typeof trackOAEvent==='function') trackOAEvent(name,params); else {window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:name,...params});} };
-  const grid=document.getElementById('schedule-grid');
-  const filters=document.getElementById('schedule-filters');
-  if(grid&&filters){
-    const open=cfg.departures.filter(d=>d.status==='open').sort((a,b)=>a.date.localeCompare(b.date));
-    const months=[...new Set(open.map(d=>d.date.slice(0,7)))];
-    const firstMonth=months[0]||'all';
-    filters.innerHTML=months.map((m,i)=>{const dt=new Date(m+'-02T12:00:00');return `<button class="schedule-filter ${i===0?'active':''}" data-month="${m}">${dt.toLocaleDateString('en-ZA',{month:'short',year:'numeric'}).toUpperCase()}</button>`}).join('')+`<button class="schedule-filter" data-month="all">ALL DATES</button>`;
-    const render=(month=firstMonth)=>{const list=open.filter(d=>month==='all'||d.date.startsWith(month));grid.innerHTML=list.map(d=>{const h=cfg.hikes[d.hike],dt=new Date(d.date+'T12:00:00');const bg=h.image?`style="background-image:url('${h.image}')"`:'';return `<article class="schedule-card"><div class="schedule-date"><strong>${String(dt.getDate()).padStart(2,'0')}</strong><span>${dt.toLocaleDateString('en-ZA',{month:'short'})} · ${dt.toLocaleDateString('en-ZA',{weekday:'short'})}</span></div><div class="schedule-image ${h.imageClass||''}" ${bg}></div><div class="schedule-copy"><span class="eyebrow">${d.time} · ${h.location||'Cape Town'}</span><h4>${h.name}</h4><p>${h.tagline}</p><p class="schedule-meta">${h.stats}</p><span class="availability-pill">${d.spaces} spaces available</span></div><div class="schedule-action"><div class="schedule-price">From ${money(h.residentPrice)}<small>SA Resident Rate</small></div><a class="btn btn-primary" href="${h.page}?date=${d.date}" data-schedule-view data-hike="${d.hike}" data-date="${d.date}">View & book</a></div></article>`}).join('')||'<div class="empty-state"><h3>No dates in this month yet</h3><p>More adventures are being added soon.</p></div>'};
-    render();filters.addEventListener('click',e=>{const b=e.target.closest('[data-month]');if(!b)return;filters.querySelectorAll('button').forEach(x=>x.classList.remove('active'));b.classList.add('active');track('oa_schedule_month_filter',{month:b.dataset.month});render(b.dataset.month)});
-    grid.addEventListener('click',e=>{const a=e.target.closest('[data-schedule-view]');if(a)track('select_item',{item_name:cfg.hikes[a.dataset.hike]?.name||a.dataset.hike,item_id:a.dataset.hike,tour_date:a.dataset.date});});
+// Scheduled hikes: enquiry only. Payments are arranged manually after review.
+(function () {
+  const cfg = window.OA_SCHEDULED_HIKES;
+  if (!cfg) return;
+  const cutoff = '2026-11-21';
+  // Crystal Pools permits include one guide: only nine places are for guests.
+  const guestCapacity = d => Math.min(Number(d.maxCapacity || 10), Number(cfg.hikes[d.hike]?.maxGuestCapacity || 10));
+  const guestSpaces = d => cfg.hikes[d.hike]?.maxGuestCapacity === 9 ? Math.max(0, Math.min(Number(d.spaces), guestCapacity(d) - Number(d.paidBookings || 0))) : Number(d.spaces);
+  const capacityNote = d => cfg.hikes[d.hike]?.maxGuestCapacity === 9 ? 'Maximum 9 guest places; 1 guide place is reserved separately.' : '';
+  const today = new Intl.DateTimeFormat('en-CA', {timeZone: 'Africa/Johannesburg', year: 'numeric', month: '2-digit', day: '2-digit'}).format(new Date());
+  const money = n => 'R' + Number(n).toLocaleString('en-ZA');
+  const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const prettyDate = s => new Date(s + 'T12:00:00+02:00').toLocaleDateString('en-ZA', {timeZone:'Africa/Johannesburg', weekday:'short', day:'numeric', month:'short', year:'numeric'});
+  const future = d => d.date >= cutoff && d.date >= today && new Date(d.date + 'T' + d.time + ':00+02:00').getTime() > Date.now();
+  const state = d => {
+    if (d.status === 'cancelled') return 'cancelled';
+    if (d.status === 'fully_booked' || guestSpaces(d) === 0) return 'fully_booked';
+    if (d.status === 'confirmed' && Number(d.paidBookings) >= Number(d.minimumPayingGuests || 3) && d.guideConfirmed === true && d.accessConfirmed === true) return 'confirmed';
+    return 'awaiting_minimum';
+  };
+  const labels = {awaiting_minimum:'Awaiting Minimum Bookings', confirmed:'Confirmed Departure', fully_booked:'Fully Booked', cancelled:'Cancelled'};
+  const canEnquire = d => future(d) && ['awaiting_minimum','confirmed'].includes(state(d));
+  const departures = cfg.departures.filter(d => cfg.hikes[d.hike] && future(d)).sort((a,b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
+  const track = (name, params) => { if (typeof trackOAEvent === 'function') trackOAEvent(name, params); };
+  const grid = document.getElementById('schedule-grid');
+  const filters = document.getElementById('schedule-filters');
+  if (grid && filters) {
+    const months = [...new Set(departures.map(d => d.date.slice(0,7)))];
+    const first = months[0] || 'all';
+    filters.innerHTML = months.map((m,i) => `<button type="button" class="schedule-filter ${i===0?'active':''}" aria-pressed="${i===0}" data-month="${m}">${new Date(m+'-02T12:00:00+02:00').toLocaleDateString('en-ZA',{timeZone:'Africa/Johannesburg',month:'short',year:'numeric'}).toUpperCase()}</button>`).join('') + '<button type="button" class="schedule-filter" aria-pressed="false" data-month="all">ALL DATES</button>';
+    const render = month => {
+      grid.innerHTML = departures.filter(d => month === 'all' || d.date.startsWith(month)).map(d => {
+        const h = cfg.hikes[d.hike], dt = new Date(d.date+'T12:00:00+02:00'), status = state(d);
+        const note = status === 'awaiting_minimum' ? `Usually ${d.minimumPayingGuests || 3} paying guests required. Request a place; departure is not yet confirmed.` : status === 'confirmed' ? 'Departure confirmed by Outdoor Addicts. Individual places and payment are arranged directly.' : status === 'fully_booked' ? 'No further places are available for this departure.' : 'This departure will not run. Contact us about alternatives.';
+        return `<article class="schedule-card"><div class="schedule-date"><strong>${dt.toLocaleDateString('en-ZA',{timeZone:'Africa/Johannesburg',day:'2-digit'})}</strong><span>${dt.toLocaleDateString('en-ZA',{timeZone:'Africa/Johannesburg',month:'short'})} · ${dt.toLocaleDateString('en-ZA',{timeZone:'Africa/Johannesburg',weekday:'short'})}</span></div><div class="schedule-image ${esc(h.imageClass || '')}" style="background-image:url('${esc(h.image || '')}')"></div><div class="schedule-copy"><span class="eyebrow">${esc(d.time)} · ${esc(h.location || 'Cape Town')}</span><h4>${esc(h.name)}</h4><p>${esc(h.tagline)}</p><p class="schedule-meta">${esc(h.stats)}</p><span class="availability-pill departure-status status-${status}">${labels[status]}</span><p class="departure-note">${note}</p>${capacityNote(d) ? `<p class="departure-note">${capacityNote(d)}</p>` : ''}</div><div class="schedule-action"><div class="schedule-price">From ${money(h.residentPrice)}<small>SA Resident Rate</small></div><a class="btn btn-primary" href="${esc(h.page)}?date=${d.date}#book">${canEnquire(d) ? 'View & enquire' : 'View adventure'}</a></div></article>`;
+      }).join('') || '<div class="empty-state"><h3>No upcoming dates in this month</h3><p>Contact us about future group dates or a private hike.</p><a href="contact.html#enquiry-form">Enquire about a hike</a></div>';
+    };
+    render(first);
+    filters.addEventListener('click', e => {
+      const button = e.target.closest('[data-month]');
+      if (!button) return;
+      filters.querySelectorAll('button').forEach(b => {b.classList.toggle('active', b === button); b.setAttribute('aria-pressed', String(b === button));});
+      render(button.dataset.month);
+    });
   }
-  document.querySelectorAll('[data-scheduled-booking]').forEach(panel=>{
-    const slug=panel.dataset.hike,res=+panel.dataset.resident,std=+panel.dataset.standard,transportRate=+(panel.dataset.transportRate||0);
-    const date=panel.querySelector('.sb-date'),r=panel.querySelector('.sb-resident'),s=panel.querySelector('.sb-standard'),rc=panel.querySelector('.sb-resident-check'),tr=panel.querySelector('.sb-transport'),total=panel.querySelector('.sb-total'),err=panel.querySelector('.sb-error'),btn=panel.querySelector('.sb-book');
-    const deps=cfg.departures.filter(d=>d.hike===slug&&d.status==='open');date.innerHTML=deps.map(d=>`<option value="${d.date}">${prettyDate(d.date)} · ${d.time} · ${d.spaces} spaces</option>`).join('');
-    const requested=new URLSearchParams(location.search).get('date');if(requested&&deps.some(d=>d.date===requested))date.value=requested;
-    const calc=()=>{let rn=+r.value||0,sn=+s.value||0,tn=+tr.value||0;let tc=transportRate?tn*transportRate:(tn===1?600:tn===2?900:tn>=3?tn*350:0);total.textContent=money(rn*res+sn*std+tc);return {rn,sn,tn,tc,amount:rn*res+sn*std+tc,guests:rn+sn}};
-    [r,s,tr].forEach(x=>x.addEventListener('input',calc));calc();
-    track('view_item',{item_id:slug,item_name:cfg.hikes[slug]?.name,value:res,currency:'ZAR'});
-    btn.addEventListener('click',()=>{err.textContent='';const x=calc();const dep=deps.find(d=>d.date===date.value);if(!x.guests){err.textContent='Please select at least one ticket.';return}if(x.guests>10||x.guests>(dep?.spaces||10)){err.textContent='The selected number of tickets exceeds the available hiking spaces.';return}if(x.rn&&!rc.checked){err.textContent='Please confirm SA residency for resident-rate tickets.';return}if(x.tn>x.guests){err.textContent='Transport passengers cannot exceed the number of guests booked.';return}if(x.tn>(dep?.transport||6)){err.textContent='Not enough Outdoor Addicts transport seats are available for this departure. Please contact us for a private transfer quote.';return}
-      const h=cfg.hikes[slug],ref='OA-'+date.value.replaceAll('-','')+'-'+Math.random().toString(36).slice(2,6).toUpperCase();
-      track('begin_checkout',{item_id:slug,item_name:h.name,tour_date:date.value,guest_count:x.guests,resident_tickets:x.rn,standard_tickets:x.sn,transport_passengers:x.tn,value:x.amount,currency:'ZAR'});
-      const modal=document.createElement('div');modal.className='booking-modal';modal.innerHTML=`<div class="booking-modal-backdrop"></div><div class="booking-modal-card" role="dialog" aria-modal="true"><button class="booking-modal-close" type="button" aria-label="Close">×</button><span class="eyebrow">Secure your booking</span><h4>Guest details</h4><p class="booking-modal-intro">Enter the lead guest's details. We'll record your booking before sending you to Yoco for secure payment.</p><div class="booking-modal-summary"><strong>${h.name}</strong><br>${prettyDate(date.value)} · ${x.guests} guest${x.guests===1?'':'s'} · ${money(x.amount)}</div><form><div class="booking-modal-grid"><div><label>First name</label><input name="first" type="text" autocomplete="given-name" required></div><div><label>Last name</label><input name="last" type="text" autocomplete="family-name" required></div><div><label>Email address</label><input name="email" type="email" autocomplete="email" required></div><div><label>Phone / WhatsApp</label><input name="phone" type="tel" autocomplete="tel" required></div></div><p class="booking-modal-note">Your booking is only confirmed once payment is successfully completed on Yoco.</p><p class="booking-modal-error" role="alert"></p><button class="btn btn-primary booking-continue" type="submit">Continue to secure payment</button></form></div>`;document.body.appendChild(modal);document.body.classList.add('booking-modal-open');
-      const close=()=>{modal.remove();document.body.classList.remove('booking-modal-open')};modal.querySelector('.booking-modal-close').onclick=close;modal.querySelector('.booking-modal-backdrop').onclick=close;
-      modal.querySelector('form').addEventListener('submit',async e=>{e.preventDefault();const f=e.currentTarget,submit=f.querySelector('button'),me=f.querySelector('.booking-modal-error');const first=f.first.value.trim(),last=f.last.value.trim(),email=f.email.value.trim(),phone=f.phone.value.trim();submit.disabled=true;submit.textContent='Preparing secure payment…';
-        const fd=new FormData();fd.append('_subject',`NEW SCHEDULED HIKE BOOKING - ${ref} - PAYMENT PENDING`);fd.append('_replyto',email);fd.append('Status','PAYMENT PENDING - guest sent to Yoco');fd.append('Reference',ref);fd.append('Experience',h.name);fd.append('Tour date',prettyDate(date.value));fd.append('SA Resident tickets',x.rn);fd.append('Standard tickets',x.sn);fd.append('Total guests',x.guests);fd.append('Transport passengers',x.tn);fd.append('Transport amount',money(x.tc));fd.append('Amount due',money(x.amount));fd.append('Lead guest',first+' '+last);fd.append('Email',email);fd.append('Phone / WhatsApp',phone);fd.append('Payment provider','Yoco Payment Page');
-        try{const response=await fetch('https://formspree.io/f/mzdkllal',{method:'POST',body:fd,headers:{Accept:'application/json'}});if(!response.ok)throw new Error();track('oa_booking_details_captured',{booking_reference:ref,item_id:slug,item_name:h.name,tour_date:date.value,guest_count:x.guests,value:x.amount,currency:'ZAR'});track('oa_payment_redirect',{booking_reference:ref,payment_provider:'Yoco',value:x.amount,currency:'ZAR'});const p=new URLSearchParams({amount:x.amount.toFixed(2),reference:ref,firstName:first,lastName:last,email,redirectOnPaymentSuccess:'https://www.outdoor-addicts.com/booking-success.html'});location.href='https://pay.yoco.com/outdoor-addicts?'+p.toString()}catch(ex){me.textContent='We could not prepare your booking. Please try again or contact us on WhatsApp.';submit.disabled=false;submit.textContent='Continue to secure payment'};
-      });
-      setTimeout(()=>modal.querySelector('input')?.focus(),50);
+  document.querySelectorAll('[data-scheduled-booking]').forEach(panel => {
+    const slug = panel.dataset.hike, h = cfg.hikes[slug];
+    if (!h) return;
+    const date = panel.querySelector('.sb-date'), r = panel.querySelector('.sb-resident'), s = panel.querySelector('.sb-standard'), rc = panel.querySelector('.sb-resident-check'), tr = panel.querySelector('.sb-transport'), total = panel.querySelector('.sb-total'), err = panel.querySelector('.sb-error'), btn = panel.querySelector('.sb-book');
+    const res = Number(panel.dataset.resident), std = Number(panel.dataset.standard), transportRate = Number(panel.dataset.transportRate || 0);
+    const deps = departures.filter(d => d.hike === slug);
+    date.innerHTML = '<option value="">Choose a scheduled date</option>' + deps.map(d => `<option value="${d.date}" ${canEnquire(d)?'':'disabled'}>${prettyDate(d.date)} · ${d.time} · ${labels[state(d)]}</option>`).join('');
+    const notice = document.createElement('p'); notice.className = 'departure-note sb-departure-status'; notice.setAttribute('aria-live','polite'); date.closest('label').after(notice);
+    const requested = new URLSearchParams(location.search).get('date');
+    if (requested && deps.some(d => d.date === requested && canEnquire(d))) date.value = requested;
+    else if (requested) err.textContent = 'That departure is unavailable. Please choose another date or contact us about alternatives.';
+    const calc = () => {
+      const rn=Number(r.value), sn=Number(s.value), tn=Number(tr.value);
+      const tc=transportRate?tn*transportRate:(tn===1?600:tn===2?900:tn>=3?tn*350:0);
+      const amount=rn*res+sn*std+tc;
+      total.textContent=money(amount);
+      return {rn,sn,tn,tc,amount,guests:rn+sn};
+    };
+    const update = () => {
+      const d=deps.find(x=>x.date===date.value);
+      notice.textContent = d ? `${labels[state(d)]}. ${state(d)==='confirmed'?'Request your individual places; payment is arranged directly.':`Usually ${d.minimumPayingGuests || 3} paying guests are required. This is a request, not a confirmed booking. No payment is taken now.`}` : 'Choose a date to request places. No payment is taken on this page.';
+      if (!deps.some(canEnquire)) notice.textContent='No scheduled dates are currently open for enquiries. Contact us for future dates or a private hike.';
+      if (h.maxGuestCapacity === 9) {
+        const available = d ? guestSpaces(d) : h.maxGuestCapacity;
+        r.max = String(Math.max(0, available - Number(s.value)));
+        s.max = String(Math.max(0, available - Number(r.value)));
+        notice.textContent += ' Maximum 9 guest places; the guide is additional and cannot be booked.';
+      }
+      btn.textContent = 'Request a place on WhatsApp';
+      btn.href = 'contact.html#enquiry-form';
+      calc();
+    };
+    [date,r,s,tr,rc].forEach(el=>el.addEventListener('change',update));
+    [r,s,tr].forEach(el=>el.addEventListener('input',h.maxGuestCapacity === 9 ? update : calc));
+    update();
+    btn.addEventListener('click', e => {
+      const x=calc(), dep=deps.find(d=>d.date===date.value);
+      let error='';
+      if (!dep || !canEnquire(dep)) error='Please choose an available scheduled date, or contact us about alternatives.';
+      else if (![x.rn,x.sn,x.tn].every(n=>Number.isInteger(n)&&n>=0) || x.guests<1) error='Please enter whole numbers of guests (at least one in total).';
+      else if (x.guests>guestCapacity(dep) || x.guests>guestSpaces(dep)) error='Your request exceeds this departure’s current capacity. Please contact us about alternatives.';
+      else if (x.rn && !rc.checked) error='Please confirm SA residency for resident-rate places.';
+      else if (x.tn>x.guests || x.tn>Number(dep.transport || 0)) error='Please check the number of transport passengers, or contact us about a transfer quote.';
+      if (error) {e.preventDefault();err.textContent=error;err.focus();return;}
+      err.textContent='';
+      const message=`Hi Outdoor Addicts, I would like to request ${x.guests} place(s) for ${h.name} on ${prettyDate(dep.date)} at ${dep.time} SAST. SA residents: ${x.rn}; standard: ${x.sn}; transport passengers: ${x.tn}. Indicative total: ${money(x.amount)}. Departure status: ${labels[state(dep)]}. I understand this is an enquiry, not a confirmed booking or payment. Please confirm availability and next steps.`;
+      btn.href='https://wa.me/27769007172?text='+encodeURIComponent(message);
+      track('oa_scheduled_place_enquiry',{item_id:slug,tour_date:dep.date,guest_count:x.guests,departure_status:state(dep)});
     });
   });
 })();
