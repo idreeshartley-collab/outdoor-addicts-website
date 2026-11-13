@@ -641,6 +641,10 @@ document.addEventListener('DOMContentLoaded', function () {
   const cfg = window.OA_SCHEDULED_HIKES;
   if (!cfg) return;
   const cutoff = '2026-11-21';
+  // Crystal Pools permits include one guide: only nine places are for guests.
+  const guestCapacity = d => Math.min(Number(d.maxCapacity || 10), Number(cfg.hikes[d.hike]?.maxGuestCapacity || 10));
+  const guestSpaces = d => cfg.hikes[d.hike]?.maxGuestCapacity === 9 ? Math.max(0, Math.min(Number(d.spaces), guestCapacity(d) - Number(d.paidBookings || 0))) : Number(d.spaces);
+  const capacityNote = d => cfg.hikes[d.hike]?.maxGuestCapacity === 9 ? 'Maximum 9 guest places; 1 guide place is reserved separately.' : '';
   const today = new Intl.DateTimeFormat('en-CA', {timeZone: 'Africa/Johannesburg', year: 'numeric', month: '2-digit', day: '2-digit'}).format(new Date());
   const money = n => 'R' + Number(n).toLocaleString('en-ZA');
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -648,7 +652,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const future = d => d.date >= cutoff && d.date >= today && new Date(d.date + 'T' + d.time + ':00+02:00').getTime() > Date.now();
   const state = d => {
     if (d.status === 'cancelled') return 'cancelled';
-    if (d.status === 'fully_booked' || Number(d.spaces) === 0) return 'fully_booked';
+    if (d.status === 'fully_booked' || guestSpaces(d) === 0) return 'fully_booked';
     if (d.status === 'confirmed' && Number(d.paidBookings) >= Number(d.minimumPayingGuests || 3) && d.guideConfirmed === true && d.accessConfirmed === true) return 'confirmed';
     return 'awaiting_minimum';
   };
@@ -666,7 +670,7 @@ document.addEventListener('DOMContentLoaded', function () {
       grid.innerHTML = departures.filter(d => month === 'all' || d.date.startsWith(month)).map(d => {
         const h = cfg.hikes[d.hike], dt = new Date(d.date+'T12:00:00+02:00'), status = state(d);
         const note = status === 'awaiting_minimum' ? `Usually ${d.minimumPayingGuests || 3} paying guests required. Request a place; departure is not yet confirmed.` : status === 'confirmed' ? 'Departure confirmed by Outdoor Addicts. Individual places and payment are arranged directly.' : status === 'fully_booked' ? 'No further places are available for this departure.' : 'This departure will not run. Contact us about alternatives.';
-        return `<article class="schedule-card"><div class="schedule-date"><strong>${dt.toLocaleDateString('en-ZA',{timeZone:'Africa/Johannesburg',day:'2-digit'})}</strong><span>${dt.toLocaleDateString('en-ZA',{timeZone:'Africa/Johannesburg',month:'short'})} · ${dt.toLocaleDateString('en-ZA',{timeZone:'Africa/Johannesburg',weekday:'short'})}</span></div><div class="schedule-image ${esc(h.imageClass || '')}" style="background-image:url('${esc(h.image || '')}')"></div><div class="schedule-copy"><span class="eyebrow">${esc(d.time)} · ${esc(h.location || 'Cape Town')}</span><h4>${esc(h.name)}</h4><p>${esc(h.tagline)}</p><p class="schedule-meta">${esc(h.stats)}</p><span class="availability-pill departure-status status-${status}">${labels[status]}</span><p class="departure-note">${note}</p></div><div class="schedule-action"><div class="schedule-price">From ${money(h.residentPrice)}<small>SA Resident Rate</small></div><a class="btn btn-primary" href="${esc(h.page)}?date=${d.date}#book">${canEnquire(d) ? 'View & enquire' : 'View adventure'}</a></div></article>`;
+        return `<article class="schedule-card"><div class="schedule-date"><strong>${dt.toLocaleDateString('en-ZA',{timeZone:'Africa/Johannesburg',day:'2-digit'})}</strong><span>${dt.toLocaleDateString('en-ZA',{timeZone:'Africa/Johannesburg',month:'short'})} · ${dt.toLocaleDateString('en-ZA',{timeZone:'Africa/Johannesburg',weekday:'short'})}</span></div><div class="schedule-image ${esc(h.imageClass || '')}" style="background-image:url('${esc(h.image || '')}')"></div><div class="schedule-copy"><span class="eyebrow">${esc(d.time)} · ${esc(h.location || 'Cape Town')}</span><h4>${esc(h.name)}</h4><p>${esc(h.tagline)}</p><p class="schedule-meta">${esc(h.stats)}</p><span class="availability-pill departure-status status-${status}">${labels[status]}</span><p class="departure-note">${note}</p>${capacityNote(d) ? `<p class="departure-note">${capacityNote(d)}</p>` : ''}</div><div class="schedule-action"><div class="schedule-price">From ${money(h.residentPrice)}<small>SA Resident Rate</small></div><a class="btn btn-primary" href="${esc(h.page)}?date=${d.date}#book">${canEnquire(d) ? 'View & enquire' : 'View adventure'}</a></div></article>`;
       }).join('') || '<div class="empty-state"><h3>No upcoming dates in this month</h3><p>Contact us about future group dates or a private hike.</p><a href="contact.html#enquiry-form">Enquire about a hike</a></div>';
     };
     render(first);
@@ -699,19 +703,25 @@ document.addEventListener('DOMContentLoaded', function () {
       const d=deps.find(x=>x.date===date.value);
       notice.textContent = d ? `${labels[state(d)]}. ${state(d)==='confirmed'?'Request your individual places; payment is arranged directly.':`Usually ${d.minimumPayingGuests || 3} paying guests are required. This is a request, not a confirmed booking. No payment is taken now.`}` : 'Choose a date to request places. No payment is taken on this page.';
       if (!deps.some(canEnquire)) notice.textContent='No scheduled dates are currently open for enquiries. Contact us for future dates or a private hike.';
+      if (h.maxGuestCapacity === 9) {
+        const available = d ? guestSpaces(d) : h.maxGuestCapacity;
+        r.max = String(Math.max(0, available - Number(s.value)));
+        s.max = String(Math.max(0, available - Number(r.value)));
+        notice.textContent += ' Maximum 9 guest places; the guide is additional and cannot be booked.';
+      }
       btn.textContent = 'Request a place on WhatsApp';
       btn.href = 'contact.html#enquiry-form';
       calc();
     };
     [date,r,s,tr,rc].forEach(el=>el.addEventListener('change',update));
-    [r,s,tr].forEach(el=>el.addEventListener('input',calc));
+    [r,s,tr].forEach(el=>el.addEventListener('input',h.maxGuestCapacity === 9 ? update : calc));
     update();
     btn.addEventListener('click', e => {
       const x=calc(), dep=deps.find(d=>d.date===date.value);
       let error='';
       if (!dep || !canEnquire(dep)) error='Please choose an available scheduled date, or contact us about alternatives.';
       else if (![x.rn,x.sn,x.tn].every(n=>Number.isInteger(n)&&n>=0) || x.guests<1) error='Please enter whole numbers of guests (at least one in total).';
-      else if (x.guests>Number(dep.maxCapacity || 10) || x.guests>Number(dep.spaces)) error='Your request exceeds this departure’s current capacity. Please contact us about alternatives.';
+      else if (x.guests>guestCapacity(dep) || x.guests>guestSpaces(dep)) error='Your request exceeds this departure’s current capacity. Please contact us about alternatives.';
       else if (x.rn && !rc.checked) error='Please confirm SA residency for resident-rate places.';
       else if (x.tn>x.guests || x.tn>Number(dep.transport || 0)) error='Please check the number of transport passengers, or contact us about a transfer quote.';
       if (error) {e.preventDefault();err.textContent=error;err.focus();return;}
