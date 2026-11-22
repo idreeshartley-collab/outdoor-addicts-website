@@ -13,11 +13,6 @@ window.OA_SCHEDULED_HIKES = {
     "valken-labyrinth": {name:"Valken Labyrinth Adventure",tagline:"The higher we climb, the wilder it gets.",stats:"±8 km · ±6–7 hrs · ±850 m · Challenging",residentPrice:550,standardPrice:950,page:"valken-labyrinth.html",image:"images/valken-labyrinth-hero.webp",location:"Camps Bay"}
   },
   departures: [
-    {hike:"crystal-pools-waterfall-adventure",date:"2026-11-21",time:"08:00",spaces:9,transport:6,status:"awaiting_minimum",minimumPayingGuests:3,maxCapacity:9,paidBookings:0,guideConfirmed:false,accessConfirmed:false,decisionLeadHours:72},
-    {hike:"tranquility-cracks",date:"2026-11-24",time:"07:00",spaces:10,transport:6,status:"awaiting_minimum",minimumPayingGuests:3,maxCapacity:10,paidBookings:0,guideConfirmed:false,accessConfirmed:false,decisionLeadHours:72},
-    {hike:"camel-rock-sunrise",date:"2026-11-25",time:"04:45",spaces:10,transport:6,status:"awaiting_minimum",minimumPayingGuests:3,maxCapacity:10,paidBookings:0,guideConfirmed:false,accessConfirmed:false,decisionLeadHours:72},
-    {hike:"little-lions-head-sunset",date:"2026-11-27",time:"17:30",spaces:10,transport:6,status:"awaiting_minimum",minimumPayingGuests:3,maxCapacity:10,paidBookings:0,guideConfirmed:false,accessConfirmed:false,decisionLeadHours:48},
-    {hike:"crystal-pools-waterfall-adventure",date:"2026-11-28",time:"08:00",spaces:9,transport:6,status:"awaiting_minimum",minimumPayingGuests:3,maxCapacity:9,paidBookings:0,guideConfirmed:false,accessConfirmed:false,decisionLeadHours:72},
     {hike:"lions-head-loop-sunset",date:"2026-12-16",time:"17:45",spaces:10,transport:6,status:"awaiting_minimum",minimumPayingGuests:3,maxCapacity:10,paidBookings:0,guideConfirmed:false,accessConfirmed:false,decisionLeadHours:48},
     {hike:"bainskloof-hidden-waterfall",date:"2026-12-21",time:"09:00",spaces:10,transport:6,status:"awaiting_minimum",minimumPayingGuests:3,maxCapacity:10,paidBookings:0,guideConfirmed:false,accessConfirmed:false,decisionLeadHours:72},
     {hike:"camel-rock-sunrise",date:"2026-12-22",time:"04:45",spaces:10,transport:6,status:"awaiting_minimum",minimumPayingGuests:3,maxCapacity:10,paidBookings:0,guideConfirmed:false,accessConfirmed:false,decisionLeadHours:72},
